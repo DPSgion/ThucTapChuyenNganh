@@ -1,25 +1,47 @@
 var express = require('express');
 var router = express.Router();
 
+var hinhnen = 'images/bg_1.jpg';
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Du lịch miền Nam'});
+    res.render('index',
+        {
+            title: 'Trang chủ',
+            background: hinhnen
+        });
 });
 
 router.get('/about', function(req, res, next) {
-    res.render('about', { title: 'Du lịch miền Nam'});
+    res.render('about', {
+        title: 'Về chúng tôi',
+        background: hinhnen
+    });
 });
 router.get('/places', function(req, res, next) {
-    res.render('places', { title: 'Du lịch miền Nam'});
+    res.render('places', {
+        title: 'Nơi đi',
+        background: hinhnen
+    });
 });
 router.get('/hotel', function(req, res, next) {
-    res.render('hotel', { title: 'Du lịch miền Nam'});
+    res.render('hotel', {
+        title: 'Khách sạn',
+        background: hinhnen
+    });
 });
-router.get('/blog', function(req, res, next) {
-    res.render('blog', { title: 'Du lịch miền Nam'});
+router.get('/car_rent', function(req, res, next) {
+    res.render('car_rent', {
+        title: 'Thuê xe tự lái',
+        background: hinhnen
+    });
 });
-router.get('/contact', function(req, res, next) {
-    res.render('contact', { title: 'Du lịch miền Nam'});
+router.get('/signin_signout', function(req, res, next) {
+    res.render('signin_signout', {
+        title: 'Đăng nhập',
+        background: hinhnen
+    });
 });
 
 module.exports = router;
