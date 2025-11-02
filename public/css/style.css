@@ -3181,11 +3181,14 @@ input[type="button"].btn-block {
 
 .nav-link {
   display: block;
-  padding: 0.5rem 1rem; }
+  padding: 0.5rem 1rem;
+}
   .nav-link:hover, .nav-link:focus {
-    text-decoration: none; }
+    text-decoration: none;
+  }
   .nav-link.disabled {
-    color: #6c757d; }
+    color: #6c757d;
+  }
 
 .nav-tabs {
   border-bottom: 1px solid #dee2e6; }

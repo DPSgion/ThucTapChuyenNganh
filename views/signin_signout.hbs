@@ -1,113 +1,141 @@
 <head>
-    <link rel="stylesheet" href="/css/signin_signout.css">
+    <title>{{{title}}}</title>
+    <link rel="stylesheet" href="/css/signin_signout.css" />
 </head>
 
-<div class="auth-container" style="background-image: url('images/bg_1.jpg');">
-    <div class="auth-box">
-        <div class="auth-header">
-            <h2 id="mainTitle">Đăng nhập</h2>
-        </div>
+<section class="auth-section" style="background: url('{{background}}')">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="auth-container">
+                    <div class="login-wrap">
+                        <!-- Form Đăng Nhập -->
+                        <div id="login-form">
+                            <h3>Đăng Nhập</h3>
+                            <p class="subtitle">Chào mừng bạn quay trở lại</p>
+                            <form class="signin-form">
+                                <div class="form-group">
+                                    <label for="login-email" class="label">Email</label>
+                                    <div class="input-wrapper">
+                                        <input id="login-email" type="email" class="form-control" placeholder="example@email.com" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="login-password" class="label">Mật khẩu</label>
+                                    <div class="input-wrapper">
+                                        <input id="login-password" type="password" class="form-control" placeholder="Nhập mật khẩu" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn-primary">Đăng Nhập</button>
+                                </div>
+                                <div class="form-links">
+                                    <a href="#" id="forgot-password-link">Quên mật khẩu?</a>
+                                    <span class="divider">|</span>
+                                    <a href="#" id="register-link">Tạo tài khoản mới</a>
+                                </div>
+                            </form>
+                        </div>
 
-        <div class="auth-tabs">
-            <button class="auth-tab active" onclick="switchTab('login')">Đăng Nhập</button>
-            <button class="auth-tab" onclick="switchTab('register')">Đăng Ký</button>
-        </div>
+                        <!-- Form Đăng Ký -->
+                        <div id="register-form">
+                            <h3>Đăng Ký</h3>
+                            <p class="subtitle">Tạo tài khoản mới của bạn</p>
+                            <form class="signup-form">
+                                <div class="form-group">
+                                    <label for="register-name" class="label">Họ và tên</label>
+                                    <input id="register-name" type="text" class="form-control" placeholder="Nguyễn Văn A" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-email" class="label">Email</label>
+                                    <input id="register-email" type="email" class="form-control" placeholder="example@email.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="register-password" class="label">Mật khẩu</label>
+                                    <input id="register-password" type="password" class="form-control" placeholder="Tối thiểu 8 ký tự" required>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn-primary">Tạo Tài Khoản</button>
+                                </div>
+                                <div class="form-links">
+                                    <a href="#" id="login-link-from-register">Đã có tài khoản? Đăng nhập</a>
+                                </div>
+                            </form>
+                        </div>
 
-        <!-- Form Đăng Nhập -->
-        <form class="auth-form active" id="loginForm">
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" class="form-control" placeholder="your@email.com" required>
+                        <!-- Form Quên Mật Khẩu -->
+                        <div id="forgot-password-form">
+                            <h3>Quên Mật Khẩu</h3>
+                            <p class="info-text">Nhập email của bạn và chúng tôi sẽ gửi hướng dẫn đặt lại mật khẩu</p>
+                            <form class="forgot-form">
+                                <div class="form-group">
+                                    <label for="forgot-email" class="label">Email</label>
+                                    <input id="forgot-email" type="email" class="form-control" placeholder="example@email.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn-primary">Gửi Yêu Cầu</button>
+                                </div>
+                                <div class="form-links">
+                                    <a href="#" id="login-link-from-forgot">Quay lại Đăng nhập</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label>Mật Khẩu</label>
-                <input type="password" class="form-control" placeholder="••••••••" required>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="remember">
-                <label for="remember">Ghi nhớ đăng nhập</label>
-            </div>
-
-            <div class="forgot-link">
-                <a href="#" onclick="openForgotModal(); return false;">Quên mật khẩu?</a>
-            </div>
-
-            <button type="submit" class="btn-submit">Đăng Nhập</button>
-        </form>
-
-        <!-- Form Đăng Ký -->
-        <form class="auth-form" id="registerForm">
-            <div class="form-group">
-                <label>Họ và Tên</label>
-                <input type="text" class="form-control" placeholder="Nguyễn Văn A" required>
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" class="form-control" placeholder="your@email.com" required>
-            </div>
-
-            <div class="form-group">
-                <label>Mật Khẩu</label>
-                <input type="password" class="form-control" placeholder="••••••••" required>
-            </div>
-
-            <div class="form-group">
-                <label>Xác Nhận Mật Khẩu</label>
-                <input type="password" class="form-control" placeholder="••••••••" required>
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="terms" required>
-                <label for="terms">Tôi đồng ý với Điều khoản & Điều kiện</label>
-            </div>
-
-            <button type="submit" class="btn-submit">Đăng Ký</button>
-        </form>
-
-        <div class="back-home">
-            <a href="/">← Quay lại trang chủ</a>
         </div>
     </div>
-</div>
+</section>
 
 <script>
-    // Chuyển đổi giữa tab đăng nhập và đăng ký
-    function switchTab(tab) {
-        const tabs = document.querySelectorAll('.auth-tab');
-        const forms = document.querySelectorAll('.auth-form');
-        const mainTitle = document.getElementById('mainTitle');
-        const mainSubtitle = document.getElementById('mainSubtitle');
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const forgotPasswordForm = document.getElementById('forgot-password-form');
 
-        tabs.forEach(t => t.classList.remove('active'));
-        forms.forEach(f => f.classList.remove('active'));
+        const registerLink = document.getElementById('register-link');
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+        const loginLinkFromRegister = document.getElementById('login-link-from-register');
+        const loginLinkFromForgot = document.getElementById('login-link-from-forgot');
 
-        if (tab === 'login') {
-            tabs[0].classList.add('active');
-            document.getElementById('loginForm').classList.add('active');
-            mainTitle.textContent = 'Đăng nhập';
-        } else {
-            tabs[1].classList.add('active');
-            document.getElementById('registerForm').classList.add('active');
-            mainTitle.textContent = 'Tạo Tài Khoản Mới';
+        function showForm(formToShow) {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'none';
+            forgotPasswordForm.style.display = 'none';
+
+            formToShow.style.display = 'block';
+            formToShow.classList.add('fade-in');
         }
-    }
 
-    function openForgotModal() {
-        alert('Chức năng quên mật khẩu đang được phát triển!');
-    }
+        registerLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showForm(registerForm);
+        });
 
-    // // Xử lý form đăng nhập
-    // document.getElementById('loginForm').addEventListener('submit', function(e) {
-    //     e.preventDefault();
-    //     alert('Đăng nhập thành công! (Demo)');
-    // });
-    //
-    // // Xử lý form đăng ký
-    // document.getElementById('registerForm').addEventListener('submit', function(e) {
-    //     e.preventDefault();
-    //     alert('Đăng ký thành công! (Demo)');
-    // });
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showForm(forgotPasswordForm);
+        });
+
+        loginLinkFromRegister.addEventListener('click', function(e) {
+            e.preventDefault();
+            showForm(loginForm);
+        });
+
+        loginLinkFromForgot.addEventListener('click', function(e) {
+            e.preventDefault();
+            showForm(loginForm);
+        });
+
+        // Xử lý submit form
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Form submitted');
+
+                // Logic xử lý ở đây
+                // ....
+            });
+        });
+    });
 </script>
