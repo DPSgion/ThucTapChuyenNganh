@@ -39,9 +39,11 @@ router.get('/car_rent', function(req, res, next) {
 });
 router.get('/signin_signout', function(req, res, next) {
     res.render('signin_signout', {
+        // layout: false,
         title: 'Đăng nhập',
         background: hinhnen
     });
 });
+
 
 module.exports = router;
