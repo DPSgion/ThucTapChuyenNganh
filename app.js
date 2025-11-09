@@ -19,15 +19,8 @@ app.engine(
 );
 
 var indexRouter = require('./routes/index');
+var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
-
-// Do đã khai báo bên index.js rồi nên không cần khai báo ở đây
-// var aboutRouter = require('./routes/about');
-// var contactRouter = require('./routes/contact');
-// var carRentRouter = require('./routes/car_rent');
-// var hotelsRouter = require('./routes/hotel');
-// var placesRouter = require('./routes/places');
-// var signin_signoutRouter = require('./routes/signin_signup');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,15 +33,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
-
-// Do đã khai báo bên index.js rồi nên không cần khai báo ở đây
-// app.use('/about', aboutRouter);
-// app.use('/contact', contactRouter);
-// app.use('/car_rent', carRentRouter);
-// app.use('/hotel', hotelsRouter);
-// app.use('/places', placesRouter);
-// app.use('/signin_signup', signin_signoutRouter);
 
 
 // catch 404 and forward to error handler
