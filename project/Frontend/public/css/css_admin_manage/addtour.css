@@ -1,0 +1,61 @@
+
+.form-tao-tour p{
+    color: black;
+}
+
+.form-row{
+    display: flex;
+    align-items: center;
+}
+.form-row p{
+    width: 100px;
+}
+
+.form-row.motangan textarea,
+.form-row.motachitiet textarea {
+    margin-top: 10px;
+}
+
+.tour-duration{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.gia-ve {
+    display: flex;
+    align-items: flex-start;
+}
+
+.gia-ve p{
+    width: 100px;
+}
+
+.loai-ve {
+    display: flex;
+    flex-direction: column;
+}
+
+.ttcb{
+    display: flex;
+    align-items: center;
+}
+
+.ttcb .ttcbPhai{
+    margin-left: 50px;
+}
+
+.btn-submit{
+    display: flex;
+    justify-content: right;
+}
+
+.btn-submit input[type="submit"]{
+    width: 200px;
+    height: 50px;
+
+    border-radius: 10px;
+
+    font-size: 30px;
+
+    cursor: pointer;
+}
