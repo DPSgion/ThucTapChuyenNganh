@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 const {engine} = require('express-handlebars');
+const pool = require('./config/db');
 
 var express = require('express');
 var path = require('path');
@@ -7,6 +8,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var app = express();
+
+
+// Middleware để đọc dữ liệu form
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 
 app.engine(
     'hbs',
@@ -35,6 +42,53 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
+
+app.post('/admin/addtour', async (req, res) => {
+    try {
+        const {
+            matour,
+            tentour,
+            diemdi,
+            diemden,
+            loaitour,
+            hinhdaidien,
+            motangan,
+            motachitiet,
+            ngaydi,
+            ngayve,
+            giavenguoilon,
+            giavetreem,
+            soluong
+        } = req.body;
+
+        const sql = `INSERT INTO quanlytour
+                     (matour,tentour,diemdi,diemden,loaitour,hinhdaidien,motangan,motachitiet,ngaydi,ngayve,giavenguoilon,giavetreem,soluong)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+        await pool.execute(sql, [
+            matour,
+            tentour,
+            diemdi,
+            diemden,
+            loaitour,
+            hinhdaidien,
+            motangan,
+            motachitiet,
+            ngaydi,
+            ngayve,
+            giavenguoilon,
+            giavetreem,
+            soluong
+        ]);
+
+        // res.send('Tour đã được lưu thành công!');
+        res.redirect('/admin/managetour');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Lỗi lưu tour: ' + err);
+    }
+});
+
 
 
 // catch 404 and forward to error handler
