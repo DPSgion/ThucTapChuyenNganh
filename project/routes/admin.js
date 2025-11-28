@@ -18,6 +18,18 @@ router.get('/tables', function(req, res, next) {
             title: 'Table Page'
         });
 });
+router.get('/managetour', function(req, res, next) {
+    res.render('admin/Manage/ManageTour',
+        {
+            title: 'Manage Tour Page'
+        });
+});
+router.get('/addtour', function(req, res, next) {
+    res.render('admin/Manage/AddTour',
+        {
+            title: 'Add Tour Page'
+        });
+});
 
 
 module.exports = router;
