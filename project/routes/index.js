@@ -18,30 +18,30 @@ router.get('/', function(req, res, next) {
         });
 });
 
-router.get('/about', function(req, res, next) {
-    res.render('home/about', {
-        title: 'Về chúng tôi',
-        background: hinhnen
-    });
-});
+// router.get('/about', function(req, res, next) {
+//     res.render('home/about', {
+//         title: 'Về chúng tôi',
+//         background: hinhnen
+//     });
+// });
 router.get('/places', function(req, res, next) {
     res.render('home/places', {
         title: 'Nơi đi',
         background: hinhnen
     });
 });
-router.get('/hotel', function(req, res, next) {
-    res.render('home/hotel', {
-        title: 'Khách sạn',
-        background: hinhnen
-    });
-});
-router.get('/car_rent', function(req, res, next) {
-    res.render('home/car_rent', {
-        title: 'Thuê xe tự lái',
-        background: hinhnen
-    });
-});
+// router.get('/hotel', function(req, res, next) {
+//     res.render('home/hotel', {
+//         title: 'Khách sạn',
+//         background: hinhnen
+//     });
+// });
+// router.get('/car_rent', function(req, res, next) {
+//     res.render('home/car_rent', {
+//         title: 'Thuê xe tự lái',
+//         background: hinhnen
+//     });
+// });
 router.get('/signin_signout', function(req, res, next) {
     res.render('home/signin_signout', {
         // layouts: false,
