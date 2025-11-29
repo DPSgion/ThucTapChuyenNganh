@@ -22,122 +22,64 @@
             <li class="breadcrumb-item active">Quản lý tour</li>
         </ol>
 
-        <button id="btnAddTour">Thêm tour</button>
+        <button id="btnAddTour"
+                {{#unless dbReady}}disabled{{/unless}}>
+            Thêm tour
+        </button>
 
-
-<!--        Các tour đã hoàn thành-->
         <div class="card mb-3">
             <div class="card-header">
-                <i class="fa fa-table"></i> Các tour đã hoàn thành</div>
+                <i class="fa fa-table"></i> Danh sách tour</div>
             <div class="card-body">
+
                 <div class="table-responsive">
+
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Mã tour</th>
-                            <th>Tên tour</th>
-                            <th>Điểm đi</th>
-                            <th>Điểm đến</th>
-                            <th>Thời gian đi - về</th>
-                            <th>Khách</th>
-                            <th colSpan={2}></th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Mã tour</th>
-                            <th>Tên tour</th>
-                            <th>Điểm đi</th>
-                            <th>Điểm đến</th>
-                            <th>Thời gian đi - về</th>
-                            <th>Khách</th>
-                            <th colSpan={2}></th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
+                            <thead>
+                            <tr>
+                                <th>Mã tour</th>
+                                <th>Tên tour</th>
+                                <th>Điểm đi</th>
+                                <th>Điểm đến</th>
+                                <th>Thời gian đi - về</th>
+                                <th>Khách</th>
+                                <th colSpan={2}></th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Mã tour</th>
+                                <th>Tên tour</th>
+                                <th>Điểm đi</th>
+                                <th>Điểm đến</th>
+                                <th>Thời gian đi - về</th>
+                                <th>Khách</th>
+                                <th colSpan={2}></th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {{#if dbReady}}
+                                {{#each tours}}
+                                    <tr>
+                                        <td>{{matour}}</td>
+                                        <td>{{tentour}}</td>
+                                        <td>{{diemdi}}</td>
+                                        <td>{{diemden}}</td>
+                                        <td>{{formatDate ngaydi}} - {{formatDate ngayve}}</td>
+                                        <td>{{soluong}}</td>
+                                    </tr>
+                                {{/each}}
+                            {{else}}
+                                <tr>
+                                    <td colspan="6" style="color:red;text-align:center;">Chưa kết nối được DB</td>
+                                </tr>
+                            {{/if}}
 
-<!--                        <tr>-->
-<!--                            <td>{tour.code}</td>-->
-<!--                            <td>{tour.name}</td>-->
-<!--                            <td>{tour.start}</td>-->
-<!--                            <td>{tour.end}</td>-->
-<!--                            <td>{tour.date}</td>-->
-<!--                            <td>{tour.slot}</td>-->
 
-<!--                            <td>-->
-<!--                                <button onClick={() => navigate(`/suatour/${tour.id}`)}>-->
-<!--                                Sửa-->
-<!--                                </button>-->
-<!--                            </td>-->
+                            </tbody>
+                        </table>
 
-<!--                            <td>-->
-<!--                                <button-->
-<!--                                        onClick={() => {-->
-<!--                                if (confirm("Xóa tour?")) {-->
-<!--                                deleteTour(tour.id);-->
-<!--                                }-->
-<!--                                }}-->
-<!--                                >-->
-<!--                                Xóa-->
-<!--                                </button>-->
-<!--                            </td>-->
-<!--                        </tr>-->
-                        <tr>
-                            <td>T000001</td>
-                            <td>Tham quan Bến Tre</td>
-                            <td>TP.Hồ Chí Minh</td>
-                            <td>Bến Tre</td>
-                            <td>15/10/2025 - 19/10/2025</td>
-                            <td>5/40</td>
-                            <td><a href="xoatour">Xóa</a></td>
-                            <td><a href="suatour">Sửa</a></td>
-                        </tr>
 
-                        <tr>
-                            <td>T000002</td>
-                            <td>Du lịch Cần Thơ</td>
-                            <td>TP.Hồ Chí Minh</td>
-                            <td>Cần Thơ</td>
-                            <td>22/11/2025 - 24/11/2025</td>
-                            <td>20/40</td>
-                            <td><a href="xoatour">Xóa</a></td>
-                            <td><a href="suatour">Sửa</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>T000003</td>
-                            <td>Khám phá Vũng Tàu</td>
-                            <td>TP.Hồ Chí Minh</td>
-                            <td>Vũng Tàu</td>
-                            <td>05/12/2025 - 07/12/2025</td>
-                            <td>30/50</td>
-                            <td><a href="xoatour">Xóa</a></td>
-                            <td><a href="suatour">Sửa</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>T000004</td>
-                            <td>Tour Phan Thiết - Mũi Né</td>
-                            <td>TP.Hồ Chí Minh</td>
-                            <td>Phan Thiết</td>
-                            <td>10/01/2026 - 12/01/2026</td>
-                            <td>18/35</td>
-                            <td><a href="xoatour">Xóa</a></td>
-                            <td><a href="suatour">Sửa</a></td>
-                        </tr>
-
-                        <tr>
-                            <td>T000005</td>
-                            <td>Khám phá Cà Mau</td>
-                            <td>Cần Thơ</td>
-                            <td>Cà Mau</td>
-                            <td>05/03/2026 - 08/03/2026</td>
-                            <td>28/40</td>
-                            <td><a href="xoatour">Xóa</a></td>
-                            <td><a href="suatour">Sửa</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>

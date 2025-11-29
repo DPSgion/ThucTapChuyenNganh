@@ -28,3 +28,22 @@ exports.addTour = async (req, res) => {
         res.status(500).send('Lỗi lưu tour: ' + err);
     }
 };
+
+exports.getAllTours = async (req, res) => {
+    let dbReady = false;
+    try {
+        const[tourRows] = await pool.execute('SELECT * FROM tour ORDER BY matour ASC');
+        console.log(tourRows);
+        res.render('admin/Manage/ManageTour', {
+            title: 'Manage Tour Page',
+            tours: tourRows, // truyền dữ liệu vào template
+            dbReady: true
+        });
+    } catch (err) {
+        console.error('DB connection error:');
+        // console.log(err);
+        res.render('admin/Manage/ManageTour', {
+            dbReady: false
+        });
+    }
+};

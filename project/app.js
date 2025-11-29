@@ -10,15 +10,24 @@ var logger = require('morgan');
 var app = express();
 
 
-app.engine(
-    'hbs',
-    engine({
-        extname: '.hbs',
-        defaultLayouts: 'layouts',
-        partialsDir: path.join(__dirname, 'views', 'partials'),
-        layoutsDir: path.join(__dirname, 'views', 'layouts'),
-    })
-);
+const hbs = require('express-handlebars');
+
+app.engine('hbs', hbs.engine({
+    extname: '.hbs',
+    defaultLayout: 'layouts',
+    layoutsDir: path.join(__dirname, 'views/layouts'),
+    partialsDir: path.join(__dirname, 'views/partials'),
+    helpers: {
+        formatDate: function(date) {
+            const d = new Date(date);
+            const day = String(d.getDate()).padStart(2,'0');
+            const month = String(d.getMonth()+1).padStart(2,'0');
+            const year = d.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+    }
+}));
+
 
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');

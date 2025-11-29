@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const upload = require('../middleware/multer');
-const {addTour} = require('../controller/tourController');
+const {addTour, getAllTours} = require('../controller/tourController');
+
 
 router.all('/*', function(req, res, next) {
     res.app.locals.layout='admin';
@@ -20,12 +21,9 @@ router.get('/tables', function(req, res, next) {
             title: 'Table Page'
         });
 });
-router.get('/managetour', function(req, res, next) {
-    res.render('admin/Manage/ManageTour',
-        {
-            title: 'Manage Tour Page'
-        });
-});
+// Lấy danh sách tour
+router.get('/managetour', getAllTours);
+
 router.get('/addtour', function(req, res, next) {
     res.render('admin/Manage/AddTour',
         {
@@ -36,5 +34,8 @@ router.get('/addtour', function(req, res, next) {
 
 // Tạo tour
 router.post('/addtour', upload.single('hinhdaidien'), addTour);
+
+// Lấy danh sách tour
+router.get('/managetour', getAllTours);
 
 module.exports = router;
