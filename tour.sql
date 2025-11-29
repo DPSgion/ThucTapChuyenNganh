@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `tour` (
   `giavetreem` int DEFAULT NULL,
   `soluong` int NOT NULL,
   PRIMARY KEY (`matour`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tour`
