@@ -292,7 +292,8 @@
                 </div>
                 <div class="form-row">
                     <p>Thời lượng:</p>
-                    <p id="duration"></p>
+                    <p id="duration" name="thoiluong"></p>
+                    <input type="hidden" id="thoiluong" name="thoiluong">
                 </div>
             </div>
 
@@ -353,18 +354,21 @@
     });
 
     ngayVeInput.addEventListener('change', calculateDuration);
-
     function calculateDuration() {
         const start = new Date(ngayDiInput.value);
         const end = new Date(ngayVeInput.value);
         if (start && end && end > start) {
             const diffTime = end - start;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            durationP.textContent = diffDays + " ngày";
+            const text = diffDays + " ngày";
+            durationP.textContent = text;
+            document.getElementById('thoiluong').value = text; // gửi về backend
         } else {
             durationP.textContent = '';
+            document.getElementById('thoiluong').value = '';
         }
     }
+
 </script>
 </body>
 </html>

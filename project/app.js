@@ -24,6 +24,9 @@ app.engine('hbs', hbs.engine({
             const month = String(d.getMonth()+1).padStart(2,'0');
             const year = d.getFullYear();
             return `${day}/${month}/${year}`;
+        },
+        isOdd: function(value) {
+            return value % 2 !== 0;
         }
     }
 }));

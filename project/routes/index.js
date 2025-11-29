@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const tourController = require('../controller/tourController');
 
 var hinhnen = 'images/bg_1.jpg';
 
@@ -10,13 +11,7 @@ router.all('/*', function(req, res, next) {
 })
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('home/index',
-        {
-            title: 'Trang chủ',
-            background: hinhnen
-        });
-});
+router.get('/', tourController.getPopularTours);
 
 // router.get('/about', function(req, res, next) {
 //     res.render('home/about', {
