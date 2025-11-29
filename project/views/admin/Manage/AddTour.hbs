@@ -209,121 +209,121 @@
 
 <!--        enctype="multipart/form-data"-->
         <form   action="/admin/addtour" method="post"
-                class="form-tao-tour" id="tourForm" >
-        <h1>TẠO TOUR</h1>
+                class="form-tao-tour" id="tourForm" enctype="multipart/form-data">
+            <h1>TẠO TOUR</h1>
 
-        <div class="ttcb">
-            <div class="ttcbTrai">
-                <div class="form-row">
-                    <p>Mã tour</p>
-                    <input type="text" name="matour"/>
+            <div class="ttcb">
+                <div class="ttcbTrai">
+                    <div class="form-row">
+                        <p>Mã tour</p>
+                        <input type="text" name="matour"/>
+                    </div>
+                    <div class="form-row">
+                        <p>Tên tour</p>
+                        <input type="text" name="tentour"/>
+                    </div>
                 </div>
-                <div class="form-row">
-                    <p>Tên tour</p>
-                    <input type="text" name="tentour"/>
-                </div>
-            </div>
 
-            <div class="ttcbPhai">
-                <div class="form-row">
-                    <p>Điểm đi:</p>
-                    <select name="diemdi">
-                        <option value="">Chọn nơi đi</option>
-                        <option value="tphcm">TP.Hồ Chí Minh</option>
-                        <option value="bentre">Bến Tre</option>
-                        <option value="dalat">Đà Lạt</option>
-                        <option value="vungtau">Vũng Tàu</option>
-                        <option value="phanthiet">Phan Thiết</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <p>Điểm đến:</p>
-                    <select name="diemden">
-                        <option value="">Chọn nơi đến</option>
-                        <option value="tphcm">TP.Hồ Chí Minh</option>
-                        <option value="bentre">Bến Tre</option>
-                        <option value="dalat">Đà Lạt</option>
-                        <option value="vungtau">Vũng Tàu</option>
-                        <option value="phanthiet">Phan Thiết</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <p>Loại tour</p>
-            <select name="loaitour">
-                <option value="">Chọn loại tour</option>
-                <option value="nghiduong">Nghỉ dưỡng</option>
-                <option value="dulich">Du lịch</option>
-            </select>
-        </div>
-
-        <div class="form-row">
-            <p>Hình đại diện</p>
-            <input type="file" name="hinhdaidien"/>
-        </div>
-
-        <div class="form-row">
-            <p>Album hình</p>
-            <input type="file" name="albumhinh" multiple/>
-        </div>
-
-        <div class="form-row motangan">
-            <p>Mô tả ngắn</p>
-            <textarea name="motangan" maxlength="200" style="width:300px; height:100px;"></textarea>
-        </div>
-
-        <div class="form-row motachitiet">
-            <p>Mô tả chi tiết</p>
-            <textarea name="motachitiet" maxlength="500" style="width:700px; height:300px;"></textarea>
-        </div>
-
-        <div class="tour-duration">
-            <div class="form-to-date">
-                <div class="form-row">
-                    <p>Đi từ ngày</p>
-                    <input type="date" name="ngaydi" id="ngaydi" min="">
-                </div>
-                <div class="form-row">
-                    <p>Đến ngày</p>
-                    <input type="date" name="ngayve" id="ngayve" min="">
+                <div class="ttcbPhai">
+                    <div class="form-row">
+                        <p>Điểm đi:</p>
+                        <select name="diemdi">
+                            <option value="">Chọn nơi đi</option>
+                            <option value="tphcm">TP.Hồ Chí Minh</option>
+                            <option value="bentre">Bến Tre</option>
+                            <option value="dalat">Đà Lạt</option>
+                            <option value="vungtau">Vũng Tàu</option>
+                            <option value="phanthiet">Phan Thiết</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <p>Điểm đến:</p>
+                        <select name="diemden">
+                            <option value="">Chọn nơi đến</option>
+                            <option value="tphcm">TP.Hồ Chí Minh</option>
+                            <option value="bentre">Bến Tre</option>
+                            <option value="dalat">Đà Lạt</option>
+                            <option value="vungtau">Vũng Tàu</option>
+                            <option value="phanthiet">Phan Thiết</option>
+                        </select>
+                    </div>
                 </div>
             </div>
+
             <div class="form-row">
-                <p>Thời lượng:</p>
-                <p id="duration"></p>
+                <p>Loại tour</p>
+                <select name="loaitour">
+                    <option value="">Chọn loại tour</option>
+                    <option value="nghiduong">Nghỉ dưỡng</option>
+                    <option value="dulich">Du lịch</option>
+                </select>
             </div>
-        </div>
 
-        <div class="gia-ve">
-            <p class="gia-ve-title">Giá vé</p>
-            <div class="loai-ve">
-                <div class="form-row">
-                    <label for="giavenguoilon">Người lớn:</label>
-                    <input type="number" name="giavenguoilon" id="giavenguoilon" placeholder="Nhập giá vé người lớn">
-                    <span class="unit">VNĐ</span>
+            <div class="form-row">
+                <p>Hình đại diện</p>
+                <input type="file" name="hinhdaidien"/>
+            </div>
+
+<!--            <div class="form-row">-->
+<!--                <p>Album hình</p>-->
+<!--                <input type="file" name="albumhinh" multiple/>-->
+<!--            </div>-->
+
+            <div class="form-row motangan">
+                <p>Mô tả ngắn</p>
+                <textarea name="motangan" maxlength="200" style="width:300px; height:100px;"></textarea>
+            </div>
+
+            <div class="form-row motachitiet">
+                <p>Mô tả chi tiết</p>
+                <textarea name="motachitiet" maxlength="500" style="width:700px; height:300px;"></textarea>
+            </div>
+
+            <div class="tour-duration">
+                <div class="form-to-date">
+                    <div class="form-row">
+                        <p>Đi từ ngày</p>
+                        <input type="date" name="ngaydi" id="ngaydi" min="">
+                    </div>
+                    <div class="form-row">
+                        <p>Đến ngày</p>
+                        <input type="date" name="ngayve" id="ngayve" min="">
+                    </div>
                 </div>
                 <div class="form-row">
-                    <label for="giavetreem">Trẻ em:</label>
-                    <input type="number" name="giavetreem" id="giavetreem" placeholder="Nhập giá vé trẻ em">
-                    <span class="unit">VNĐ</span>
+                    <p>Thời lượng:</p>
+                    <p id="duration"></p>
                 </div>
             </div>
-        </div>
 
-        <div class="form-row soluong">
-            <p>Số lượng:</p>
-            <input type="number" name="soluong"/>
-        </div>
-
-        <div class="btn-choice">
-            <button type="button" class="btn-huy" onclick="window.location.href='/admin/managetour'">Hủy</button>
-            <div class="btn-submit">
-                <input type="submit" value="Tạo">
+            <div class="gia-ve">
+                <p class="gia-ve-title">Giá vé</p>
+                <div class="loai-ve">
+                    <div class="form-row">
+                        <label for="giavenguoilon">Người lớn:</label>
+                        <input type="number" name="giavenguoilon" id="giavenguoilon" placeholder="Nhập giá vé người lớn">
+                        <span class="unit">VNĐ</span>
+                    </div>
+                    <div class="form-row">
+                        <label for="giavetreem">Trẻ em:</label>
+                        <input type="number" name="giavetreem" id="giavetreem" placeholder="Nhập giá vé trẻ em">
+                        <span class="unit">VNĐ</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </form>
+
+            <div class="form-row soluong">
+                <p>Số lượng:</p>
+                <input type="number" name="soluong"/>
+            </div>
+
+            <div class="btn-choice">
+                <button type="button" class="btn-huy" onclick="window.location.href='/admin/managetour'">Hủy</button>
+                <div class="btn-submit">
+                    <input type="submit" value="Tạo">
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 

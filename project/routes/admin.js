@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const upload = require('../middleware/multer');
+const {addTour} = require('../controller/tourController');
 
 router.all('/*', function(req, res, next) {
     res.app.locals.layout='admin';
@@ -31,5 +33,8 @@ router.get('/addtour', function(req, res, next) {
         });
 });
 
+
+// Tạo tour
+router.post('/addtour', upload.single('hinhdaidien'), addTour);
 
 module.exports = router;
