@@ -4,44 +4,59 @@
 </head>
 
 <section class="auth-section" style="background: url('{{background}}')">
+
     <div class="container">
+        {{#if error_message}}
+            <div class="alert alert-danger">{{error_message}}</div>
+        {{/if}}
+        {{#if success_message}}
+            <div class="alert alert-success">{{success_message}}</div>
+        {{/if}}
+        {{#if error}}
+            <div class="alert alert-danger">{{error}}</div>
+        {{/if}}
+
+        {{#if errors}}
+            {{#each errors}}
+                <div class="alert alert-danger">{{this.message}}</div>
+            {{/each}}
+        {{/if}}
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-5">
                 <div class="auth-container">
                     <div class="login-wrap">
-                        <!-- Form Đăng Nhập -->
+
                         <div id="login-form">
                             <h3>Đăng Nhập</h3>
                             <p class="subtitle">Chào mừng bạn quay trở lại</p>
-                            <form class="signin-form">
+
+                            <form class="signin-form" action="/login" method="POST">
                                 <div class="form-group">
                                     <label for="login-email" class="label">Email</label>
                                     <div class="input-wrapper">
-                                        <input id="login-email" type="email" class="form-control" placeholder="example@email.com" required>
+                                        <input name="email" id="login-email" type="email" class="form-control" placeholder="example@email.com" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="login-password" class="label">Mật khẩu</label>
                                     <div class="input-wrapper">
-                                        <input id="login-password" type="password" class="form-control" placeholder="Nhập mật khẩu" required>
+                                        <input name="password" id="login-password" type="password" class="form-control" placeholder="Nhập mật khẩu" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn-primary">Đăng Nhập</button>
                                 </div>
                                 <div class="form-links">
-                                    <a href="#" id="forgot-password-link">Quên mật khẩu?</a>
-                                    <span class="divider">|</span>
                                     <a href="#" id="register-link">Tạo tài khoản mới</a>
                                 </div>
                             </form>
                         </div>
 
-                        <!-- Form Đăng Ký -->
-                        <div id="register-form">
+                        <div id="register-form" style="display: none;">
                             <h3>Đăng Ký</h3>
                             <p class="subtitle">Tạo tài khoản mới của bạn</p>
-                            <form class="signup-form">
+
+                            <form class="signup-form" action="/register" method="POST">
                                 <div class="form-group">
                                     <label for="register-name" class="label">Họ và tên</label>
                                     <input name="hoten" id="register-name" type="text" class="form-control" placeholder="Nguyễn Văn A" required>
@@ -63,14 +78,13 @@
                             </form>
                         </div>
 
-                        <!-- Form Quên Mật Khẩu -->
-                        <div id="forgot-password-form">
+                        <div id="forgot-password-form" style="display: none;">
                             <h3>Quên Mật Khẩu</h3>
                             <p class="info-text">Nhập email của bạn và chúng tôi sẽ gửi hướng dẫn đặt lại mật khẩu</p>
-                            <form class="forgot-form">
+                            <form class="forgot-form" action="/forgot-password" method="POST">
                                 <div class="form-group">
                                     <label for="forgot-email" class="label">Email</label>
-                                    <input id="forgot-email" type="email" class="form-control" placeholder="example@email.com" required>
+                                    <input name="email" id="forgot-email" type="email" class="form-control" placeholder="example@email.com" required>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn-primary">Gửi Yêu Cầu</button>
@@ -89,12 +103,13 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Chỉ giữ lại code chuyển đổi qua lại giữa các Form
+        // Đã xóa toàn bộ code fetch/ajax
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         const forgotPasswordForm = document.getElementById('forgot-password-form');
 
         const registerLink = document.getElementById('register-link');
-        const forgotPasswordLink = document.getElementById('forgot-password-link');
         const loginLinkFromRegister = document.getElementById('login-link-from-register');
         const loginLinkFromForgot = document.getElementById('login-link-from-forgot');
 
@@ -112,11 +127,6 @@
             showForm(registerForm);
         });
 
-        forgotPasswordLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            showForm(forgotPasswordForm);
-        });
-
         loginLinkFromRegister.addEventListener('click', function(e) {
             e.preventDefault();
             showForm(loginForm);
@@ -126,56 +136,5 @@
             e.preventDefault();
             showForm(loginForm);
         });
-
-        // Xử lý submit form
-        // Gửi đăng ký
-        document.querySelector('.signup-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const data = {
-                hoten: document.getElementById('register-name').value,
-                email: document.getElementById('register-email').value,
-                password: document.getElementById('register-password').value
-            };
-
-            const res = await fetch('/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            const result = await res.json();
-
-            alert(result.message);
-
-            if (result.status === 'success') {
-                // Chuyển về đăng nhập
-                showForm(loginForm);
-            }
-        });
-        document.querySelector('.signin-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const data = {
-                email: document.getElementById('login-email').value,
-                password: document.getElementById('login-password').value
-            };
-
-            const res = await fetch('/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            const result = await res.json();
-
-            alert(result.message);
-
-            if (result.status === 'success') {
-                window.location.href = '/admin';
-            }
-        });
-
-
     });
 </script>

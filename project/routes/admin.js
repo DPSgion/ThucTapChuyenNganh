@@ -31,6 +31,14 @@ router.get('/addtour', function(req, res, next) {
         });
 });
 
+router.get('/logout', (req, res, next) => {
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        req.session.destroy();
+        res.redirect('/');
+    });
+});
+
 
 // Tạo tour
 router.post('/addtour', upload.single('hinhdaidien'), addTour);
