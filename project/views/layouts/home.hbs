@@ -46,6 +46,9 @@
                                   <b>{{user.hoten}}</b>
                               </a>
                               <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                  {{# if isAdmin}}
+                                      <div class="dropdown-divider"></div> <a class="dropdown-item" href="/admin">Admin</a>
+                                  {{/if}}
                                   <div class="dropdown-divider"></div> <a class="dropdown-item" href="/logout">Đăng xuất</a>
                               </div>
                           </li>
@@ -55,7 +58,7 @@
                               <a href="/register" class="nav-link">Register</a>
                           </li>
                           <li class="nav-item">
-                              <a href="/signin_signout" class="nav-link">Sign in</a>
+                              <a href="/login" class="nav-link">Sign in</a>
                           </li>
                       {{/if}}
                   </ul>
