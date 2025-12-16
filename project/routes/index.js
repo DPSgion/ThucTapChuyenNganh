@@ -32,11 +32,15 @@ function daDangNhapThiDuoiDi(req, res, next) {
 router.get('/register', daDangNhapThiDuoiDi, function(req, res, next) {
     res.render('home/register', { title: 'Đăng ký', background: hinhnen });
 });
+router.get('/update_password', function(req, res, next) {
+    res.render('home/update_password', { title: 'Đổi mật khẩu', background: hinhnen });
+})
 router.get('/login', daDangNhapThiDuoiDi, function(req, res, next) {
     res.render('home/login', { title: 'Đăng nhập', background: hinhnen });
 });
 
 router.post('/register', authController.register);
+router.post('/update_password', authController.update_password);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 

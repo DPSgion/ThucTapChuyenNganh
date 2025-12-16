@@ -127,13 +127,11 @@ exports.login = (req, res, next) => {
             if (err) { return next(err); }
 
             // --- PHÂN QUYỀN ---
-            // if (user.vaitro === 1) {
-            //     return res.redirect('/admin');
-            // } else {
-            //     return res.redirect('/');
-            // }
-
-            return res.redirect('/');
+            if (user.vaitro === 1) {
+                return res.redirect('/admin');
+            } else {
+                return res.redirect('/');
+            }
 
         });
 
