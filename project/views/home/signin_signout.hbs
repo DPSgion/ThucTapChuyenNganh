@@ -34,66 +34,21 @@
                                 <div class="form-group">
                                     <label for="login-email" class="label">Email</label>
                                     <div class="input-wrapper">
-                                        <input name="email" id="login-email" type="email" class="form-control" placeholder="example@email.com" required>
+                                        <input name="email" id="login-email" type="email" class="form-control" placeholder="example@email.com" >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="login-password" class="label">Mật khẩu</label>
                                     <div class="input-wrapper">
-                                        <input name="password" id="login-password" type="password" class="form-control" placeholder="Nhập mật khẩu" required>
+                                        <input name="password" id="login-password" type="password" class="form-control" placeholder="Nhập mật khẩu" >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn-primary">Đăng Nhập</button>
                                 </div>
-                                <div class="form-links">
-                                    <a href="#" id="register-link">Tạo tài khoản mới</a>
-                                </div>
                             </form>
                         </div>
 
-                        <div id="register-form" style="display: none;">
-                            <h3>Đăng Ký</h3>
-                            <p class="subtitle">Tạo tài khoản mới của bạn</p>
-
-                            <form class="signup-form" action="/register" method="POST">
-                                <div class="form-group">
-                                    <label for="register-name" class="label">Họ và tên</label>
-                                    <input name="hoten" id="register-name" type="text" class="form-control" placeholder="Nguyễn Văn A" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="register-email" class="label">Email</label>
-                                    <input name="email" id="register-email" type="email" class="form-control" placeholder="example@email.com" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="register-password" class="label">Mật khẩu</label>
-                                    <input name="password" id="register-password" type="password" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn-primary">Tạo Tài Khoản</button>
-                                </div>
-                                <div class="form-links">
-                                    <a href="#" id="login-link-from-register">Đã có tài khoản? Đăng nhập</a>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div id="forgot-password-form" style="display: none;">
-                            <h3>Quên Mật Khẩu</h3>
-                            <p class="info-text">Nhập email của bạn và chúng tôi sẽ gửi hướng dẫn đặt lại mật khẩu</p>
-                            <form class="forgot-form" action="/forgot-password" method="POST">
-                                <div class="form-group">
-                                    <label for="forgot-email" class="label">Email</label>
-                                    <input name="email" id="forgot-email" type="email" class="form-control" placeholder="example@email.com" required>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn-primary">Gửi Yêu Cầu</button>
-                                </div>
-                                <div class="form-links">
-                                    <a href="#" id="login-link-from-forgot">Quay lại Đăng nhập</a>
-                                </div>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -103,8 +58,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Chỉ giữ lại code chuyển đổi qua lại giữa các Form
-        // Đã xóa toàn bộ code fetch/ajax
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         const forgotPasswordForm = document.getElementById('forgot-password-form');

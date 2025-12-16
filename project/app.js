@@ -9,7 +9,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 
-// 1. Gọi thư viện lưu session MySQL
+// Gọi thư viện lưu session MySQL
 const MySQLStore = require('express-mysql-session')(session);
 
 var app = express();
@@ -74,10 +74,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // =================================================================
 
 app.use(session({
-    secret: 'secret_key', // Chuỗi bảo mật
+    secret: 'secret_key',
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 ngày (tắt server là mất)
+    cookie: { maxAge: 1000 * 60 * 60 * 24 } // 1 ngày
 }));
 // =================================================================
 
@@ -97,17 +97,14 @@ app.use((req, res, next) => {
 // Routes công khai
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+// app.use('/admin', adminRouter);
 
-// =================================================================
-// 3. MIDDLEWARE CHẶN ADMIN (NGƯỜI GÁC CỔNG)
-// =================================================================
 const checkAdminRole = (req, res, next) => {
     // Nếu đã đăng nhập VÀ vai trò là 1 (Admin)
-    if (req.isAuthenticated() && req.user.vaitro === 1) {
+    if (req.isAuthenticated()) {
         return next(); // Cho qua
     }
 
-    // Nếu không phải -> Đá về trang chủ
     req.flash('error_message', 'Bạn không có quyền truy cập trang Admin!');
     res.redirect('/');
 };

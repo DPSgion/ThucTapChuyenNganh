@@ -31,8 +31,6 @@ passport.use(new LocalStrategy({
 }));
 
 passport.serializeUser((user, done) => {
-    // LƯU Ý: Đảm bảo DB của bạn cột id tên là 'userid' hay 'id' hay 'ID'
-    // Ở đây bạn dùng user.userid -> Nếu DB là 'userid' thì đúng.
     done(null, user.userid);
 });
 
@@ -68,14 +66,17 @@ router.get('/places', function(req, res, next) {
 // Chặn người đã đăng nhập quay lại trang login
 function daDangNhapThiDuoiDi(req, res, next) {
     if (req.isAuthenticated()) {
-        if(req.user.vaitro === 1) return res.redirect('/admin');
-        return res.redirect('/');
+        // if(req.user.vaitro === 1) return res.redirect('/admin');
+        return res.redirect('/admin');
     }
     next();
 }
 
 router.get('/signin_signout', daDangNhapThiDuoiDi, function(req, res, next) {
     res.render('home/signin_signout', { title: 'Đăng nhập', background: hinhnen });
+});
+router.get('/register', daDangNhapThiDuoiDi, function(req, res, next) {
+    res.render('home/register', { title: 'Đăng ky', background: hinhnen });
 });
 
 
@@ -88,7 +89,7 @@ router.post('/register', async function(req, res, next) {
     if (!password) errors.push({ message: 'Mật khẩu là bắt buộc' });
 
     if (errors.length > 0) {
-        return res.render('home/signin_signout', {
+        return res.render('home/register', {
             title: 'Đăng nhập',
             errors: errors,
             background: hinhnen
@@ -99,7 +100,7 @@ router.post('/register', async function(req, res, next) {
         const [rows] = await pool.query('SELECT * FROM user WHERE email = ?', [email]);
         if (rows.length > 0) {
             req.flash('error_message', 'Email này đã được đăng ký!');
-            return res.redirect('/signin_signout');
+            return res.redirect('/register');
         }
 
         const salt = await bcryptjs.genSalt(10);
@@ -115,13 +116,27 @@ router.post('/register', async function(req, res, next) {
     } catch (err) {
         console.error(err);
         req.flash('error_message', 'Lỗi hệ thống!');
-        res.redirect('/signin_signout');
+        res.redirect('/register');
     }
 });
 
 // Xử lý Đăng nhập và Phân quyền
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
+
+        const { email, password } = req.body;
+        let errors = [];
+        if (!email) errors.push({ message: 'Email là bắt buộc' });
+        if (!password) errors.push({ message: 'Mật khẩu là bắt buộc' });
+
+        if (errors.length > 0) {
+            return res.render('home/signin_signout', {
+                title: 'Đăng nhập',
+                errors: errors,
+                background: hinhnen
+            });
+        }
+
         if (err) { return next(err); }
         if (!user) {
             req.flash('error_message', info.message);
@@ -132,11 +147,18 @@ router.post('/login', (req, res, next) => {
             if (err) { return next(err); }
 
             // --- PHÂN QUYỀN ---
-            if (user.vaitro === 1) {
-                return res.redirect('/admin');
-            } else {
-                return res.redirect('/');
-            }
+            // if (user.vaitro === 1) {
+            //     return res.redirect('/admin');
+            // } else {
+            //     return res.redirect('/');
+            // }
+
+            return res.redirect('/admin');
+            return res.render('/admin', {
+                title: 'Admin',
+                user: user,
+                background: hinhnen
+            });
         });
 
     })(req, res, next);

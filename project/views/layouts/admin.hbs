@@ -215,6 +215,14 @@
                     </div>
                 </form>
             </li>
+
+            <li class="nav-item">
+                {{#if user}}
+                <p class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <b style="color: yellow">Chào {{user.hoten}}</b>
+                </p>
+                {{/if}}
+            </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
                     <i class="fa fa-fw fa-sign-out"></i>Logout</a>
