@@ -55,68 +55,71 @@
                     <li>
                         <a href="/admin/managetour">Tour</a>
                     </li>
-<!--                    <li>-->
-<!--                        <a href="#">Cards</a>-->
-<!--                    </li>-->
-                </ul>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-                    <i class="fa fa-fw fa-file"></i>
-                    <span class="nav-link-text">Example Pages</span>
-                </a>
-                <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-                    <li>
-                        <a href="#">Login Page</a>
-                    </li>
-                    <li>
-                        <a href="#">Registration Page</a>
-                    </li>
-                    <li>
-                        <a href="#">Forgot Password Page</a>
-                    </li>
-                    <li>
-                        <a href="#">Blank Page</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-                    <i class="fa fa-fw fa-sitemap"></i>
-                    <span class="nav-link-text">Menu Levels</span>
-                </a>
-                <ul class="sidenav-second-level collapse" id="collapseMulti">
-                    <li>
-                        <a href="#">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="#">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a href="#">Second Level Item</a>
-                    </li>
-                    <li>
-                        <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-                        <ul class="sidenav-third-level collapse" id="collapseMulti2">
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level Item</a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin/update_password">
                     <i class="fa fa-fw fa-link"></i>
-                    <span class="nav-link-text">Link</span>
+                    <span class="nav-link-text">Cập nhật mật khẩu</span>
                 </a>
             </li>
+<!--            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">-->
+<!--                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">-->
+<!--                    <i class="fa fa-fw fa-file"></i>-->
+<!--                    <span class="nav-link-text">Example Pages</span>-->
+<!--                </a>-->
+<!--                <ul class="sidenav-second-level collapse" id="collapseExamplePages">-->
+<!--                    <li>-->
+<!--                        <a href="#">Login Page</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#">Registration Page</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#">Forgot Password Page</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#">Blank Page</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">-->
+<!--                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">-->
+<!--                    <i class="fa fa-fw fa-sitemap"></i>-->
+<!--                    <span class="nav-link-text">Menu Levels</span>-->
+<!--                </a>-->
+<!--                <ul class="sidenav-second-level collapse" id="collapseMulti">-->
+<!--                    <li>-->
+<!--                        <a href="#">Second Level Item</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#">Second Level Item</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="#">Second Level Item</a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>-->
+<!--                        <ul class="sidenav-third-level collapse" id="collapseMulti2">-->
+<!--                            <li>-->
+<!--                                <a href="#">Third Level Item</a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="#">Third Level Item</a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="#">Third Level Item</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">-->
+<!--                <a class="nav-link" href="#">-->
+<!--                    <i class="fa fa-fw fa-link"></i>-->
+<!--                    <span class="nav-link-text">Link</span>-->
+<!--                </a>-->
+<!--            </li>-->
         </ul>
         <ul class="navbar-nav sidenav-toggler">
             <li class="nav-item">
@@ -218,9 +221,9 @@
 
             <li class="nav-item">
                 {{#if user}}
-                <p class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                <a class="nav-link">
                     <b style="color: yellow">Chào {{user.hoten}}</b>
-                </p>
+                </a>
                 {{/if}}
             </li>
             <li class="nav-item">
