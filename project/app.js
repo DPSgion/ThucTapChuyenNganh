@@ -35,6 +35,9 @@ app.engine('hbs', engine({
         },
         isOdd: function(value) {
             return value % 2 !== 0;
+        },
+        eq: function(a, b) {
+            return a == b;
         }
     }
 }));
