@@ -11,6 +11,11 @@ const {
     updateVehicle,
     toggleMaintenanceVehicle
 } = require('../controller/vehicleController');
+const {
+    getAllHotels, getAddHotel, addHotel,
+    getEditHotel, updateHotel,
+    toggleStatusHotel
+} = require('../controller/hotelController');
 
 
 router.all('/*', function(req, res, next) {
@@ -103,6 +108,27 @@ router.post('/editvehicle/:id', upload.fields([
 ]), updateVehicle);
 
 router.get('/vehicle/toggle-maintenance/:id', toggleMaintenanceVehicle);
+
+
+
+// HOTEL
+router.get('/managehotel', getAllHotels);
+router.get('/addhotel', getAddHotel);
+
+router.post('/addhotel', upload.fields([
+    { name: 'anh_bia', maxCount: 1 },
+    { name: 'album', maxCount: 10 }
+]), addHotel);
+
+router.get('/edithotel/:id', getEditHotel);
+router.post('/edithotel/:id', upload.fields([
+    { name: 'anh_bia', maxCount: 1 },
+    { name: 'album', maxCount: 10 }
+]), updateHotel);
+
+// Thay đổi trạng thái Khách sạn
+router.get('/hotel/toggle-status/:id', toggleStatusHotel);
+
 
 
 router.get('/logout', (req, res, next) => {

@@ -1,0 +1,120 @@
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/managehotel">Quản lý khách sạn</a></li>
+            <li class="breadcrumb-item active">Sửa khách sạn</li>
+        </ol>
+
+        <div class="container mt-4" style="max-width: 900px;">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <form action="/admin/edithotel/{{hotel.ma_khach_san}}" method="POST" enctype="multipart/form-data">
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Tên khách sạn</label>
+                                <input type="text" class="form-control" name="ten_khach_san"
+                                       value="{{hotel.ten_khach_san}}" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Thuộc địa điểm</label>
+                                <select name="ma_dia_diem" class="form-control" required>
+                                    <option value="">-- Chọn địa điểm --</option>
+                                    {{#each locations}}
+                                        <option value="{{this.ma_dia_diem}}"
+                                                {{#if (eq ../hotel.ma_dia_diem this.ma_dia_diem)}}selected{{/if}}>
+                                            {{this.ten_dia_diem}}
+                                        </option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Địa chỉ cụ thể</label>
+                            <input type="text" class="form-control" name="dia_chi"
+                                   value="{{hotel.dia_chi}}" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Giá thuê (VNĐ/Đêm)</label>
+                                <input type="number" class="form-control" name="gia_thue" min="0"
+                                       value="{{hotel.gia_thue}}" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Tên quản lý</label>
+                                <input type="text" class="form-control" name="quan_ly"
+                                       value="{{hotel.quan_ly}}" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-bold">Số điện thoại</label>
+                                <input type="text" class="form-control" name="sdt"
+                                       value="{{hotel.sdt}}" required>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="p-3 border rounded bg-light">
+                                    <label class="form-label fw-bold">Ảnh bìa hiện tại</label>
+                                    <div class="mb-2">
+                                        <img src="/uploads/{{hotel.anh_bia}}" style="height: 150px; border-radius: 5px;">
+                                    </div>
+                                    <label class="small text-muted">Chọn ảnh mới nếu muốn thay đổi:</label>
+                                    <input type="file" class="form-control" name="anh_bia" accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 border rounded bg-light mb-3">
+                            <label class="form-label fw-bold d-block">Album ảnh hiện có</label>
+                            <div class="row">
+                                {{#each album}}
+                                    <div class="col-md-3 mb-4">
+                                        <div class="card h-100 shadow-sm border">
+                                            <img src="/uploads/{{this.duong_dan}}" class="card-img-top"
+                                                 style="height: 120px; object-fit: cover;">
+                                            <div class="card-body bg-light p-2 text-center">
+                                                <div class="form-check form-switch d-inline-block">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           name="delete_images[]"
+                                                           value="{{this.ma_hinh_anh}}"
+                                                           id="img_{{this.ma_hinh_anh}}" style="cursor: pointer;">
+                                                    <label class="form-check-label text-danger small fw-bold"
+                                                           for="img_{{this.ma_hinh_anh}}" style="cursor: pointer;">
+                                                        Xóa
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            </div>
+                            <label class="form-label fw-bold mt-3">Thêm ảnh vào Album</label>
+                            <input type="file" class="form-control" name="album" multiple accept="image/*">
+                        </div>
+
+                        <div class="mt-4 d-flex justify-content-between">
+                            <div>
+                                <a href="/admin/managehotel" class="btn btn-secondary">
+                                    <i class="fa fa-arrow-left"></i> Quay lại
+                                </a>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary px-5 font-weight-bold" style="cursor: pointer;">
+                                    Cập nhật
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -38,6 +38,9 @@ app.engine('hbs', engine({
         },
         eq: function(a, b) {
             return a == b;
+        },
+        formatCurrency: (value) => {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
         }
     }
 }));
