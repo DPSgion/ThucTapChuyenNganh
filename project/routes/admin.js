@@ -4,6 +4,13 @@ const upload = require('../middleware/multer');
 const {addTour, getAllTours} = require('../controller/tourController');
 const {update_password} = require('../controller/authController');
 const { addLocation, getAllLocations, getEditLocation, updateLocation, toggleStatusLocation } = require('../controller/locationController');
+const {
+    getAllVehicles,
+    addVehicle,
+    getEditVehicle,
+    updateVehicle,
+    toggleMaintenanceVehicle
+} = require('../controller/vehicleController');
 
 
 router.all('/*', function(req, res, next) {
@@ -76,6 +83,26 @@ router.get('/toggle-status/:id', toggleStatusLocation);
 
 
 
+// VEHICLE
+router.get('/managevehicle', getAllVehicles);
+
+router.get('/addvehicle', function(req, res) {
+    res.render('admin/Manage/Vehicle/AddVehicle', {
+        title: 'Thêm phương tiện'
+    });
+});
+router.post('/addvehicle', upload.fields([
+    { name: 'hinh_anh_bia', maxCount: 1 },
+    { name: 'album', maxCount: 10 }
+]), addVehicle);
+
+router.get('/editvehicle/:id', getEditVehicle);
+router.post('/editvehicle/:id', upload.fields([
+    { name: 'hinh_anh_bia', maxCount: 1 },
+    { name: 'album', maxCount: 10 }
+]), updateVehicle);
+
+router.get('/vehicle/toggle-maintenance/:id', toggleMaintenanceVehicle);
 
 
 router.get('/logout', (req, res, next) => {

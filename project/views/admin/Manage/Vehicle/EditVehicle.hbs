@@ -1,0 +1,106 @@
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin/managevehicle">Quản lý phương tiện</a>
+            </li>
+            <li class="breadcrumb-item active">Sửa phương tiện</li>
+        </ol>
+
+        <div class="container mt-4" style="max-width: 800px;">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <form action="/admin/editvehicle/{{vehicle.ma_phuong_tien}}" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label for="ten_phuong_tien" class="form-label fw-bold">Tên Phương Tiện</label>
+                            <input type="text" class="form-control" id="ten_phuong_tien" name="ten_phuong_tien"
+                                   value="{{vehicle.ten_phuong_tien}}" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="so_cho" class="form-label fw-bold">Số chỗ</label>
+                                <select name="so_cho" id="so_cho" class="form-control" required>
+                                    <option value="">Chọn số chỗ</option>
+                                    <option value="16">16 chỗ</option>
+                                    <option value="30">30 chỗ</option>
+                                    <option value="45">45 chỗ</option>
+                                    <option value="47">47 chỗ</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="bien_so" class="form-label fw-bold">Biển Số</label>
+                                <input type="text" class="form-control" id="bien_so" name="bien_so"
+                                       value="{{vehicle.bien_so}}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 p-3 border rounded bg-light">
+                            <label class="form-label fw-bold">Ảnh đại diện hiện tại</label>
+                            <div class="mb-2">
+                                <img src="/uploads/{{vehicle.hinh_dai_dien}}" alt="Ảnh xe"
+                                     style="height: 150px; object-fit: cover; border-radius: 5px;">
+                            </div>
+
+                            <label class="form-label mt-2">Đổi ảnh đại diện mới (Nếu không đổi thì để trống)</label>
+                            <input type="file" class="form-control" name="hinh_anh_bia" accept="image/*">
+                        </div>
+
+                        <div class="mb-4 p-3 border rounded bg-light">
+                            <label class="form-label fw-bold d-block">Album ảnh hiện có</label>
+
+                            <div class="row">
+                                {{#each album}}
+                                    <div class="col-md-3 mb-4">
+                                        <div class="card h-100 shadow-sm border">
+                                            <img src="/uploads/{{this.duong_dan}}" class="card-img-top"
+                                                 style="height: 120px; object-fit: cover;" alt="Img">
+
+                                            <div class="card-body bg-light p-2 text-center">
+                                                <div class="form-check form-switch d-inline-block">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           name="delete_images[]"
+                                                           value="{{this.ma_hinh}}"
+                                                           id="img_{{this.ma_hinh}}"
+                                                           style="cursor: pointer;">
+                                                    <label class="form-check-label text-danger small fw-bold"
+                                                           for="img_{{this.ma_hinh}}" style="cursor: pointer;">
+                                                        Xóa
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/each}}
+                            </div>
+
+                            <label class="form-label fw-bold mt-3">Thêm ảnh mới vào Album</label>
+                            <input type="file" class="form-control" name="album" multiple accept="image/*">
+                            <div class="form-text">Giữ phím <strong>Ctrl</strong> để chọn nhiều ảnh.</div>
+                        </div>
+
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary px-4" style="cursor: pointer">Cập nhật xe</button>
+                            <a href="/admin/managevehicle" class="btn btn-secondary ms-2">Hủy</a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const currentSeats = "{{vehicle.so_cho}}";
+        const selectBox = document.getElementById("so_cho");
+        if(selectBox) {
+            selectBox.value = currentSeats;
+        }
+    });
+</script>

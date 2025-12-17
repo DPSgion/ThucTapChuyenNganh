@@ -1,0 +1,111 @@
+<style>
+    #btnAddLocation {
+        margin-bottom: 30px;
+        cursor: pointer;
+        border-radius: 10px;
+        padding: 8px 16px;
+        border: 1px solid #333;
+        background-color: #fff;
+        text-decoration: none;
+    }
+
+    #btnAddLocation:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Quản lý phương tiện</li>
+        </ol>
+
+        <a href="/admin/addvehicle" id="btnAddLocation">
+            Thêm phương tiện
+        </a>
+
+        <div class="card mb-3" style="margin-top: 30px;">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Danh sách phương tiện</div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên xe</th>
+                            <th>Số chỗ</th>
+                            <th>Biển số</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên xe</th>
+                            <th>Số chỗ</th>
+                            <th>Biển số</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {{#each vehicles}}
+                            <tr>
+                                <td>{{this.ma_phuong_tien}}</td>
+                                <td>
+                                    <img src="/uploads/{{this.hinh_dai_dien}}" alt="Xe"
+                                         style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 5px;">
+                                    {{this.ten_phuong_tien}}
+                                </td>
+                                <td>{{this.so_cho}} chỗ</td>
+                                <td><span>{{this.bien_so}}</span></td>
+
+                                <td class="text-center">
+                                    {{#if (eq this.trang_thai 0)}} <span class="badge badge-success p-2">Sẵn sàng</span> {{/if}}
+                                    {{#if (eq this.trang_thai 1)}} <span class="badge badge-primary p-2">Đang có chuyến</span> {{/if}}
+                                    {{#if (eq this.trang_thai 2)}} <span class="badge badge-danger p-2">Bảo trì</span> {{/if}}
+                                </td>
+
+                                <td>
+                                    <a href="/admin/editvehicle/{{this.ma_phuong_tien}}" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-edit"></i> Sửa
+                                    </a>
+
+                                    {{#if (eq this.trang_thai 1)}}
+                                        <button class="btn btn-secondary btn-sm" disabled title="Xe đang chạy, không thể thao tác">
+                                            <i class="fa fa-lock"></i> Đang chạy
+                                        </button>
+                                    {{else}}
+                                        {{#if (eq this.trang_thai 0)}}
+                                            <a href="/admin/vehicle/toggle-maintenance/{{this.ma_phuong_tien}}"
+                                               class="btn btn-danger btn-sm"
+                                               onclick="return confirm('Cho xe này đi bảo trì?')">
+                                                <i class="fa fa-wrench"></i> Bảo trì
+                                            </a>
+                                        {{else}}
+                                            <a href="/admin/vehicle/toggle-maintenance/{{this.ma_phuong_tien}}"
+                                               class="btn btn-success btn-sm"
+                                               onclick="return confirm('Xe đã bảo trì xong, cho sẵn sàng?')">
+                                                <i class="fa fa-check"></i> Sẵn sàng
+                                            </a>
+                                        {{/if}}
+
+                                    {{/if}}
+                                </td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
