@@ -1,0 +1,137 @@
+<style>
+    #btnAddLocation {
+        margin-bottom: 30px;
+        cursor: pointer;
+        border-radius: 10px;
+        padding: 8px 16px;
+        border: 1px solid #333;
+        background-color: #fff;
+        text-decoration: none;
+    }
+
+    #btnAddLocation:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Quản lý đối tác khách sạn</li>
+        </ol>
+
+        <a href="/admin/addhotel" id="btnAddLocation">
+            Thêm khách sạn
+        </a>
+
+        <div class="card mb-3" style="margin-top: 30px;">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Danh sách đối tác khách sạn</div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Địa điểm</th>
+                            <th>Tên khách sạn</th>
+                            <th>Địa chỉ</th>
+                            <th>Giá thuê</th>
+                            <th>Quản lý</th>
+                            <th>SĐT</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>STT</th>
+                            <th>Địa điểm</th>
+                            <th>Tên khách sạn</th>
+                            <th>Địa chỉ</th>
+                            <th>Giá thuê</th>
+                            <th>Quản lý</th>
+                            <th>SĐT</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {{#each hotels}}
+                            <tr>
+                                <td class="text-center">{{this.ma_khach_san}}</td>
+
+                                <td>
+                                    <span>{{this.ten_dia_diem}}</span>
+                                </td>
+
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        {{#if this.anh_bia}}
+                                            <img src="/uploads/{{this.anh_bia}}" alt="KS"
+                                                 style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 10px;">
+                                        {{else}}
+                                            <span class="text-muted mr-2"><i class="fa fa-image"></i></span>
+                                        {{/if}}
+                                        <span class="font-weight-bold">{{this.ten_khach_san}}</span>
+                                    </div>
+                                </td>
+
+                                <td><small>{{this.dia_chi}}</small></td>
+
+                                <td class="text-right text-danger font-weight-bold">
+                                    {{formatCurrency this.gia_thue}}
+                                </td>
+
+                                <td>{{this.quan_ly}}</td>
+
+                                <td>{{this.sdt}}</td>
+
+                                <td class="text-center">
+                                    {{#if (eq this.trang_thai 1)}}
+                                        <span>Hợp tác</span>
+                                    {{else}}
+                                        <span>Ngưng</span>
+                                    {{/if}}
+                                </td>
+
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="/admin/edithotel/{{this.ma_khach_san}}" class="btn btn-primary btn-sm mr-1">
+                                            Sửa
+                                        </a>
+
+                                        {{#if (eq this.trang_thai 1)}}
+                                            <a href="/admin/hotel/toggle-status/{{this.ma_khach_san}}"
+                                               class="btn btn-warning btn-sm"
+                                               onclick="return confirm('Tạm ngưng hợp tác với khách sạn này ?')"
+                                               title="Ngưng hợp tác">
+                                                Ngưng hợp tác
+                                            </a>
+                                        {{else}}
+                                            <a href="/admin/hotel/toggle-status/{{this.ma_khach_san}}"
+                                               class="btn btn-success btn-sm"
+                                               onclick="return confirm('Hợp tác lại khách sạn này ?')"
+                                               title="Hợp tác lại">
+                                                Hợp tác lại
+                                            </a>
+                                        {{/if}}
+                                    </div>
+                                </td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
