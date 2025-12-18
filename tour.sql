@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 17, 2025 at 03:48 PM
+-- Generation Time: Dec 18, 2025 at 10:43 AM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -194,32 +194,22 @@ INSERT INTO `phuong_tien` (`ma_phuong_tien`, `ten_phuong_tien`, `bien_so`, `so_c
 
 DROP TABLE IF EXISTS `tour`;
 CREATE TABLE IF NOT EXISTS `tour` (
-  `matour` int NOT NULL AUTO_INCREMENT,
-  `tentour` varchar(50) NOT NULL,
-  `diemdi` varchar(50) NOT NULL,
-  `diemden` varchar(50) NOT NULL,
-  `loaitour` varchar(20) NOT NULL,
-  `hinhdaidien` varchar(100) NOT NULL,
-  `motangan` varchar(400) NOT NULL,
-  `motachitiet` varchar(2000) NOT NULL,
-  `ngaydi` date NOT NULL,
-  `ngayve` date NOT NULL,
-  `thoiluong` varchar(20) NOT NULL,
-  `giavenguoilon` int NOT NULL,
-  `giavetreem` int DEFAULT NULL,
-  `soluong` int NOT NULL,
-  PRIMARY KEY (`matour`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `ma_tour` int NOT NULL AUTO_INCREMENT,
+  `ten_tour` varchar(100) NOT NULL,
+  `diem_di` int NOT NULL,
+  `diem_den` int NOT NULL,
+  `trang_thai` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ma_tour`),
+  KEY `diem_di` (`diem_di`),
+  KEY `diem_den` (`diem_den`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `tour`
 --
 
-INSERT INTO `tour` (`matour`, `tentour`, `diemdi`, `diemden`, `loaitour`, `hinhdaidien`, `motangan`, `motachitiet`, `ngaydi`, `ngayve`, `thoiluong`, `giavenguoilon`, `giavetreem`, `soluong`) VALUES
-(1, 'Đà Lạt', 'tphcm', 'dalat', 'dulich', '1764392577383-da-lat.jpg', 'Đà Lạt chill chill', 'Đà Lạt chill chill', '2025-11-29', '2025-12-07', '8 ngày', 1000000, 900000, 15),
-(2, 'Tour Bến Tre', 'tphcm', 'bentre', 'nghiduong', '1764392953027-ben-tre.jpg', 'Về Bến Tre miền Tây', 'Bến Tre - miền Tây sông nước', '2025-12-04', '2025-12-08', '4 ngày', 500000, 350000, 26),
-(3, 'Tour Vũng Tàu', 'bentre', 'vungtau', 'nghiduong', '1764393035415-vung-tau.jpg', 'Đi tắm biển ở Vũng Tàu', 'Đi tắm biển ở Vũng Tàu, ăn hải sản tươi ngon', '2025-12-06', '2025-12-07', '1 ngày', 250000, 120000, 15),
-(4, 'Tour Phan Thiết', 'tphcm', 'phanthiet', 'dulich', '1765883902180-phan-thiet.jpg', 'Tour Phan Thiết', 'Tour Phan Thiết', '2025-12-17', '2025-12-21', '4 ngày', 500000, 700000, 45);
+INSERT INTO `tour` (`ma_tour`, `ten_tour`, `diem_di`, `diem_den`, `trang_thai`) VALUES
+(1, 'Tour du lịch Phú Quốc', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -268,6 +258,13 @@ ALTER TABLE `hinh_khach_san`
 --
 ALTER TABLE `hinh_phuong_tien`
   ADD CONSTRAINT `hinh_phuong_tien_ibfk_1` FOREIGN KEY (`ma_phuong_tien`) REFERENCES `phuong_tien` (`ma_phuong_tien`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tour`
+--
+ALTER TABLE `tour`
+  ADD CONSTRAINT `tour_ibfk_1` FOREIGN KEY (`diem_di`) REFERENCES `dia_diem` (`ma_dia_diem`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tour_ibfk_2` FOREIGN KEY (`diem_den`) REFERENCES `dia_diem` (`ma_dia_diem`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
