@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const upload = require('../middleware/multer');
-const {addTour, getAllTours} = require('../controller/tourController');
 const {update_password} = require('../controller/authController');
 const { addLocation, getAllLocations, getEditLocation, updateLocation, toggleStatusLocation } = require('../controller/locationController');
 const {
@@ -16,6 +15,12 @@ const {
     getEditHotel, updateHotel,
     toggleStatusHotel
 } = require('../controller/hotelController');
+
+const {
+    getAllTours, toggleStatusTour,
+    getAddTour, addTour,
+    getEditTour, updateTour
+} = require('../controller/tourController');
 
 
 router.all('/*', function(req, res, next) {
@@ -41,18 +46,20 @@ router.get('/tables', function(req, res, next) {
 });
 
 
-// Lấy danh sách tour
+
+
+
+
 router.get('/managetour', getAllTours);
 
+router.get('/addtour', getAddTour);
+router.post('/addtour', upload.none(), addTour); // upload.none() nếu không up file
 
-// ADD TOUR
-router.get('/addtour', function(req, res, next) {
-    res.render('admin/Manage/AddTour',
-        {
-            title: 'Add Tour Page'
-        });
-});
-router.post('/addtour', upload.single('hinhdaidien'), addTour);
+router.get('/edittour/:id', getEditTour);
+router.post('/edittour/:id', updateTour);
+
+// Thay đổi trạng thái
+router.get('/tour/toggle-status/:id', toggleStatusTour);
 
 
 // UPDATE PASSWORD
