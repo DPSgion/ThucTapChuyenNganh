@@ -1,0 +1,107 @@
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin/managetour">Quản lý Tour</a>
+            </li>
+            <li class="breadcrumb-item active">Sửa thông tin Tour</li>
+        </ol>
+
+        <div class="container mt-4" style="max-width: 800px;">
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <form action="/admin/edittour/{{tour.ma_tour}}" method="POST">
+
+                        <div class="mb-4">
+                            <label for="ten_tour" class="form-label fw-bold">Tên Tour</label>
+                            <input type="text" class="form-control" id="ten_tour" name="ten_tour"
+                                   value="{{tour.ten_tour}}" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="diem_di" class="form-label fw-bold">
+                                    Điểm Đi (Khởi hành)
+                                </label>
+                                <select name="diem_di" id="diem_di" class="form-control" required>
+                                    <option value="">-- Chọn nơi khởi hành --</option>
+                                    {{#each locations}}
+                                        <option value="{{this.ma_dia_diem}}"
+                                                {{#if (eq ../tour.diem_di this.ma_dia_diem)}}selected{{/if}}>
+                                            {{this.ten_dia_diem}}
+                                        </option>
+                                    {{/each}}
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="diem_den" class="form-label fw-bold">
+                                    Điểm Đến (Kết thúc)
+                                </label>
+                                <select name="diem_den" id="diem_den" class="form-control" required>
+                                    <option value="">-- Chọn nơi đến --</option>
+                                    {{#each locations}}
+                                        <option value="{{this.ma_dia_diem}}"
+                                                {{#if (eq ../tour.diem_den this.ma_dia_diem)}}selected{{/if}}>
+                                            {{this.ten_dia_diem}}
+                                        </option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex justify-content-between">
+                            <div>
+                                <a href="/admin/managetour" class="btn btn-secondary">
+                                    <i class="fa fa-arrow-left"></i> Quay lại
+                                </a>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary px-5 font-weight-bold" style="cursor: pointer">
+                                Cập nhật Tour
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const startSelect = document.getElementById("diem_di");
+        const endSelect = document.getElementById("diem_den");
+
+        function filterOptions(sourceSelect, targetSelect) {
+            const selectedValue = sourceSelect.value;
+            const options = targetSelect.options;
+
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].value == selectedValue && selectedValue != "") {
+                    options[i].disabled = true;
+                    // Edit mode: Nếu đang selected cái bị disable thì không tự đổi
+                    // Chỉ disable để user không chọn lại thôi
+                } else {
+                    options[i].disabled = false;
+                }
+            }
+        }
+
+        // Bắt sự kiện change
+        startSelect.addEventListener("change", function() {
+            filterOptions(startSelect, endSelect);
+        });
+
+        endSelect.addEventListener("change", function() {
+            filterOptions(endSelect, startSelect);
+        });
+
+        // --- QUAN TRỌNG: Chạy ngay lập tức để disable các option đang trùng hiện tại ---
+        filterOptions(startSelect, endSelect);
+        filterOptions(endSelect, startSelect);
+    });
+</script>

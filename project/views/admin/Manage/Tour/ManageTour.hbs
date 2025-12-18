@@ -1,0 +1,111 @@
+<style>
+    #btnAddLocation {
+        margin-bottom: 30px;
+        cursor: pointer;
+        border-radius: 10px;
+        padding: 8px 16px;
+        border: 1px solid #333;
+        background-color: #fff;
+        text-decoration: none;
+    }
+
+    #btnAddLocation:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Quản lý tour</li>
+        </ol>
+
+        <a href="/admin/addtour" id="btnAddLocation">
+            Thêm tour
+        </a>
+
+        <div class="card mb-3" style="margin-top: 30px;">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Danh sách tour</div>
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên tour</th>
+                            <th>Điểm đi</th>
+                            <th>Điểm đến</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên tour</th>
+                            <th>Điểm đi</th>
+                            <th>Điểm đến</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {{#each tours}}
+                            <tr>
+                                <td class="text-center">{{this.ma_tour}}</td>
+
+                                <td class="font-weight-bold">{{this.ten_tour}}</td>
+
+                                <td>
+                                    {{this.ten_diem_di}}
+                                </td>
+
+                                <td>
+                                    {{this.ten_diem_den}}
+                                </td>
+
+                                <td class="text-center">
+                                    {{#if (eq this.trang_thai 1)}}
+                                        <span>Đang mở</span>
+                                    {{else}}
+                                        <span>Đã đóng</span>
+                                    {{/if}}
+                                </td>
+
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="/admin/edittour/{{this.ma_tour}}" class="btn btn-primary btn-sm mr-1">
+                                                    Sửa
+                                        </a>
+
+                                        {{#if (eq this.trang_thai 1)}}
+                                            <a href="/admin/tour/toggle-status/{{this.ma_tour}}"
+                                               class="btn btn-warning btn-sm"
+                                               onclick="return confirm('Tạm ngưng tour này ?')">
+                                                    Ngưng hoạt động
+                                            </a>
+                                        {{else}}
+                                            <a href="/admin/tour/toggle-status/{{this.ma_tour}}"
+                                               class="btn btn-success btn-sm"
+                                               onclick="return confirm('Mở lại tour này ?')">
+                                                    Hoạt động lại
+                                            </a>
+                                        {{/if}}
+                                    </div>
+                                </td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

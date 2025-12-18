@@ -14,7 +14,14 @@ router.all('/*', function(req, res, next) {
 })
 
 // Route trang chủ
-router.get('/', tourController.getPopularTours);
+// router.get('/', tourController.getPopularTours);
+
+router.get('/', function(req, res, next) {
+    res.render('home', {
+        title: 'Trang chủ',
+        background: hinhnen,
+    });
+})
 
 router.get('/places', function(req, res, next) {
     res.render('home/places', { title: 'Nơi đi', background: hinhnen });
