@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-const tourController = require('../controller/tourController');
 const authController = require('../controller/authController');
+const {getPlaces} = require('../controller/placesController');
 
 
 var hinhnen = 'images/bg_1.jpg';
@@ -13,9 +13,6 @@ router.all('/*', function(req, res, next) {
     next();
 })
 
-// Route trang chủ
-// router.get('/', tourController.getPopularTours);
-
 router.get('/', function(req, res, next) {
     res.render('home', {
         title: 'Trang chủ',
@@ -23,9 +20,7 @@ router.get('/', function(req, res, next) {
     });
 })
 
-router.get('/places', function(req, res, next) {
-    res.render('home/places', { title: 'Nơi đi', background: hinhnen });
-});
+router.get('/places', getPlaces);
 
 // Chặn người đã đăng nhập quay lại trang login
 function daDangNhapThiDuoiDi(req, res, next) {
