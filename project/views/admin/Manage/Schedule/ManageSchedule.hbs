@@ -1,0 +1,138 @@
+<style>
+    /* Style nút thêm */
+    #btnAddLocation {
+        margin-bottom: 30px; cursor: pointer; border-radius: 10px;
+        padding: 8px 16px; border: 1px solid #333; background-color: #fff; text-decoration: none;
+    }
+    #btnAddLocation:hover { background-color: #f0f0f0; }
+
+    /* CSS cho phần hiển thị thông tin */
+    .info-group { border-left: 3px solid #007bff; padding-left: 10px; }
+    .price-adult { font-weight: bold; color: #d63384; display: block; }
+    .price-child { font-size: 0.9em; color: #666; font-style: italic; }
+</style>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+            <li class="breadcrumb-item active">Quản lý lịch trình Tour</li>
+        </ol>
+
+        <a href="/admin/addschedule" id="btnAddLocation">Thêm lịch trình</a>
+
+        <div class="card mb-3" style="margin-top: 30px;">
+            <div class="card-header"><i class="fa fa-calendar-alt"></i> Danh sách chuyến đi</div>
+            <div class="card-body">
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="bg-light">
+                        <tr>
+                            <th width="5%" class="text-center">ID</th>
+                            <th width="30%">Thông tin & Dịch vụ</th>
+                            <th width="20%">Thời gian</th>
+                            <th width="10%" class="text-center">Số chỗ</th> <th width="15%">Giá vé</th>
+                            <th width="10%" class="text-center">Trạng thái</th>
+                            <th width="10%">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th width="5%" class="text-center">ID</th>
+                            <th width="30%">Thông tin & Dịch vụ</th>
+                            <th width="20%">Thời gian</th>
+                            <th width="10%" class="text-center">Số chỗ</th> <th width="15%">Giá vé</th>
+                            <th width="10%" class="text-center">Trạng thái</th>
+                            <th width="10%">Hành động</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {{#each schedules}}
+                            <tr>
+                                <td class="text-center align-middle">{{this.ma_lich_trinh}}</td>
+
+                                <td class="align-middle">
+                                    <div class="info-group">
+                                        <div class="font-weight-bold text-primary mb-2" style="font-size: 1.1em;">
+                                            {{this.ten_tour}}
+                                        </div>
+
+                                        <div class="small text-dark mb-1">
+                                            <i class="fa fa-bus text-info mr-1" style="width: 20px;"></i>{{this.ten_phuong_tien}}
+                                            <span class="badge badge-light border ml-1">{{this.bien_so}}</span>
+                                        </div>
+
+                                        <div class="small text-dark">
+                                            <i class="fa fa-hotel text-warning mr-1" style="width: 20px;"></i>
+                                            {{this.ten_khach_san}}
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="align-middle" style="font-size: 0.95em;">
+                                    <div class="mb-2">
+                                        <i class="fa fa-calendar-check text-success mr-1"></i>
+                                        <span class="font-weight-bold">Đi: </span>
+                                        {{formatDateTime this.ngay_di}}
+                                    </div>
+                                    <div>
+                                        <i class="fa fa-calendar-times text-danger mr-1"></i>
+                                        <span class="font-weight-bold">Về: </span>
+                                        {{formatDateTime this.ngay_ve}}
+                                    </div>
+                                </td>
+
+                                <td class="align-middle text-center">
+                                    <div style="font-size: 1.2em; font-weight: bold; color: #333;">
+                                        {{this.so_cho_da_dat}} / {{this.so_cho}}
+                                    </div>
+                                    <small class="text-muted">ghế</small>
+
+                                    {{#if (eq this.so_cho_da_dat this.so_cho)}}
+                                        <span class="badge badge-danger mt-2 d-block">Hết chỗ</span>
+                                    {{else}}
+                                        <span class="badge badge-success mt-2 d-block">Còn nhận</span>
+                                    {{/if}}
+                                </td>
+
+                                <td class="align-middle">
+                                    <span class="price-adult">Người lớn: {{formatCurrency this.gia_nguoi_lon}}</span>
+                                    <span class="price-child">Trẻ em: {{formatCurrency this.gia_tre_em}}</span>
+                                </td>
+
+                                <td class="text-center align-middle">
+                                    {{#if (eq this.trang_thai 1)}}
+                                        <span class="badge badge-primary p-2">Hoạt động</span>
+                                    {{else}}
+                                        <span class="badge badge-secondary p-2">Đã ngưng</span>
+                                    {{/if}}
+                                </td>
+
+                                <td class="align-middle text-center">
+                                    <a href="/admin/editschedule/{{this.ma_lich_trinh}}" class="btn btn-primary btn-sm mb-1" title="Sửa">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+
+                                    {{#if (eq this.trang_thai 1)}}
+                                        <a href="/admin/schedule/toggle-status/{{this.ma_lich_trinh}}"
+                                           class="btn btn-warning btn-sm" onclick="return confirm('Ngưng lịch này?')">
+                                            <i class="fa fa-ban"></i>
+                                        </a>
+                                    {{else}}
+                                        <a href="/admin/schedule/toggle-status/{{this.ma_lich_trinh}}"
+                                           class="btn btn-success btn-sm" onclick="return confirm('Kích hoạt lại?')">
+                                            <i class="fa fa-check"></i>
+                                        </a>
+                                    {{/if}}
+                                </td>
+                            </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

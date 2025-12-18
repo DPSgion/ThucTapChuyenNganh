@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 18, 2025 at 10:43 AM
+-- Generation Time: Dec 18, 2025 at 03:31 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -162,6 +162,37 @@ INSERT INTO `khach_san` (`ma_khach_san`, `ten_khach_san`, `ma_dia_diem`, `dia_ch
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `lich_trinh_tour`
+--
+
+DROP TABLE IF EXISTS `lich_trinh_tour`;
+CREATE TABLE IF NOT EXISTS `lich_trinh_tour` (
+  `ma_lich_trinh` int NOT NULL AUTO_INCREMENT,
+  `ma_tour` int NOT NULL,
+  `ma_phuong_tien` int NOT NULL,
+  `ma_khach_san` int NOT NULL,
+  `ngay_di` datetime NOT NULL,
+  `ngay_ve` datetime NOT NULL,
+  `gia_nguoi_lon` decimal(15,0) NOT NULL,
+  `gia_tre_em` decimal(15,0) NOT NULL,
+  `so_cho_da_dat` int NOT NULL DEFAULT '0',
+  `trang_thai` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ma_lich_trinh`),
+  KEY `ma_tour` (`ma_tour`),
+  KEY `ma_khach_san` (`ma_khach_san`),
+  KEY `ma_phuong_tien` (`ma_phuong_tien`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `lich_trinh_tour`
+--
+
+INSERT INTO `lich_trinh_tour` (`ma_lich_trinh`, `ma_tour`, `ma_phuong_tien`, `ma_khach_san`, `ngay_di`, `ngay_ve`, `gia_nguoi_lon`, `gia_tre_em`, `so_cho_da_dat`, `trang_thai`) VALUES
+(2, 1, 3, 2, '2025-12-22 22:22:00', '2025-12-25 22:22:00', 3000000, 2500000, 0, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `phuong_tien`
 --
 
@@ -181,10 +212,10 @@ CREATE TABLE IF NOT EXISTS `phuong_tien` (
 --
 
 INSERT INTO `phuong_tien` (`ma_phuong_tien`, `ten_phuong_tien`, `bien_so`, `so_cho`, `trang_thai`, `hinh_dai_dien`) VALUES
-(1, 'Hyundai Solati', '59B-123.45', 16, 0, '1765976233953-solati-1.jpg'),
-(2, 'Ford Transit', '50B-888.88', 16, 0, '1765976458846-FordTransit-1.png'),
-(3, 'Hyundai County', '59B-987.65', 30, 0, '1765976684466-HyundaiCounty-1.jpg'),
-(4, 'Thaco Bluesky', '59B-678.90', 47, 0, '1765976920781-bluesky-bus-1.jpg');
+(1, 'Hyundai Solati', '59B-123.45', 15, 0, '1765976233953-solati-1.jpg'),
+(2, 'Ford Transit', '50B-888.88', 15, 0, '1765976458846-FordTransit-1.png'),
+(3, 'Hyundai County', '59B-987.65', 29, 0, '1765976684466-HyundaiCounty-1.jpg'),
+(4, 'Thaco Bluesky', '59B-678.90', 45, 0, '1765976920781-bluesky-bus-1.jpg');
 
 -- --------------------------------------------------------
 
@@ -209,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `tour` (
 --
 
 INSERT INTO `tour` (`ma_tour`, `ten_tour`, `diem_di`, `diem_den`, `trang_thai`) VALUES
-(1, 'Tour du lịch Phú Quốc', 2, 1, 1);
+(1, 'Tour du lịch Bến Tre - Phú Quốc', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -258,6 +289,14 @@ ALTER TABLE `hinh_khach_san`
 --
 ALTER TABLE `hinh_phuong_tien`
   ADD CONSTRAINT `hinh_phuong_tien_ibfk_1` FOREIGN KEY (`ma_phuong_tien`) REFERENCES `phuong_tien` (`ma_phuong_tien`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `lich_trinh_tour`
+--
+ALTER TABLE `lich_trinh_tour`
+  ADD CONSTRAINT `lich_trinh_tour_ibfk_1` FOREIGN KEY (`ma_tour`) REFERENCES `tour` (`ma_tour`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `lich_trinh_tour_ibfk_2` FOREIGN KEY (`ma_khach_san`) REFERENCES `khach_san` (`ma_khach_san`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `lich_trinh_tour_ibfk_3` FOREIGN KEY (`ma_phuong_tien`) REFERENCES `phuong_tien` (`ma_phuong_tien`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tour`

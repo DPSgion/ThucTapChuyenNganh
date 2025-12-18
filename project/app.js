@@ -26,12 +26,20 @@ app.engine('hbs', engine({
     layoutsDir: path.join(__dirname, 'views/layouts'),
     partialsDir: path.join(__dirname, 'views/partials'),
     helpers: {
-        formatDate: function(date) {
+        formatDateTime: function(date) {
             const d = new Date(date);
+
+            // Lấy ngày tháng năm
             const day = String(d.getDate()).padStart(2, '0');
             const month = String(d.getMonth() + 1).padStart(2, '0');
             const year = d.getFullYear();
-            return `${day}/${month}/${year}`;
+
+            // Lấy giờ phút
+            const hours = String(d.getHours()).padStart(2, '0');
+            const minutes = String(d.getMinutes()).padStart(2, '0');
+
+            // Trả về dạng: 08:30 - 20/11/2025
+            return `${hours}:${minutes} - ${day}/${month}/${year}`;
         },
         isOdd: function(value) {
             return value % 2 !== 0;
