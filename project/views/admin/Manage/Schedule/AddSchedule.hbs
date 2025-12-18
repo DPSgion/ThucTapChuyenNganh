@@ -1,0 +1,194 @@
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin/manageschedule">Quản lý Lịch trình</a>
+            </li>
+            <li class="breadcrumb-item active">Thêm Lịch trình</li>
+        </ol>
+
+        <div class="container mt-4" style="max-width: 800px;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Tạo Tour Mới</h3>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <form action="/admin/addschedule" method="POST">
+
+                        <h5 class="text-primary mb-3">Chọn thời gian khởi hành</h5>
+                        <div class="alert border-primary">
+
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Ngày giờ Đi <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" class="form-control" name="ngay_di" id="ngay_di" required>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label class="font-weight-bold">Ngày giờ Về <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" class="form-control" name="ngay_ve" id="ngay_ve" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6 border-right">
+                                <h5 class="text-primary mb-3">Chọn Dịch Vụ</h5>
+
+                                <div class="form-group mb-3">
+                                    <label class="font-weight-bold text-danger"><i class="fa fa-filter"></i> Lọc theo Địa điểm đến:</label>
+                                    <select id="filter_location" class="form-control">
+                                        <option value="">Chọn điểm đến</option>
+                                        {{#each locations}}
+                                            <option value="{{this.ma_dia_diem}}">{{this.ten_dia_diem}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="font-weight-bold">Chọn Tour <span class="text-danger">*</span></label>
+                                    <select name="ma_tour" id="select_tour" class="form-control" required disabled>
+                                        <option value="">Chọn địa điểm trước</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="font-weight-bold">Chọn Phương tiện <span class="text-danger">*</span></label>
+                                    <select name="ma_phuong_tien" id="select_vehicle" class="form-control" required disabled>
+                                        <option value="">Chọn ngày đi và ngày về trước</option>
+                                    </select>
+                                    <div id="vehicle_loading" class="text-primary small mt-1" style="display:none;">
+                                        <i class="fa fa-spinner fa-spin"></i> Đang tìm xe trống...
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label class="font-weight-bold">Chọn Khách sạn <span class="text-danger">*</span></label>
+                                    <select name="ma_khach_san" id="select_hotel" class="form-control" required disabled>
+                                        <option value="">Chọn địa điểm trước</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h5 class="text-primary mb-3">Giá Vé</h5>
+                                <div class="form-group mb-3">
+                                    <label class="font-weight-bold text-success">Giá vé Người lớn (VNĐ) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" name="gia_nguoi_lon" placeholder="VD: 5000000" min="0" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="font-weight-bold text-secondary">Giá vé Trẻ em (VNĐ) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" name="gia_tre_em" placeholder="VD: 2500000" min="0" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex justify-content-between">
+                            <div>
+                                <a href="/admin/manageschedule" class="btn btn-secondary ms-2">Hủy bỏ</a>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary px-5 font-weight-bold" style="cursor: pointer">
+                                Lưu Lịch Trình
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // -PHẦN 1: XỬ LÝ LỌC TOUR/HOTEL THEO ĐỊA ĐIỂM (CŨ)-
+        const locationFilter = document.getElementById('filter_location');
+        const tourSelect = document.getElementById('select_tour');
+        const hotelSelect = document.getElementById('select_hotel');
+
+        locationFilter.addEventListener('change', function() {
+            const locationId = this.value;
+            // (Giữ nguyên logic fetch tour/hotel như bài trước...)
+            // ... Bạn copy lại đoạn JS của bài trước vào đây nhé cho đỡ dài ...
+            // Chỉ thêm đoạn fetch Tour/Hotel thôi
+
+            // Code fetch Tour/Hotel ngắn gọn để bạn hình dung:
+            tourSelect.innerHTML = '<option value="">Đang tải...</option>';
+            hotelSelect.innerHTML = '<option value="">Đang tải...</option>';
+
+            if(!locationId) {
+                tourSelect.innerHTML = '<option value="">Chọn địa điểm trước</option>';
+                hotelSelect.innerHTML = '<option value="">Chọn địa điểm trước</option>';
+                return;
+            }
+
+            fetch(`/admin/api/get-resources?locationId=${locationId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        let tourHtml = '<option value="">Chọn Tour</option>';
+                        data.tours.forEach(t => tourHtml += `<option value="${t.ma_tour}">${t.ten_tour}</option>`);
+                        tourSelect.innerHTML = tourHtml; tourSelect.disabled = false;
+
+                        let hotelHtml = '<option value="">Chọn Khách sạn</option>';
+                        data.hotels.forEach(h => hotelHtml += `<option value="${h.ma_khach_san}">${h.ten_khach_san}</option>`);
+                        hotelSelect.innerHTML = hotelHtml; hotelSelect.disabled = false;
+                    });
+        });
+
+
+        // -PHẦN 2: XỬ LÝ LỌC XE THEO NGÀY (MỚI)-
+        const dateStart = document.getElementById('ngay_di');
+        const dateEnd = document.getElementById('ngay_ve');
+        const vehicleSelect = document.getElementById('select_vehicle');
+        const loadingIcon = document.getElementById('vehicle_loading');
+
+        function checkAndLoadVehicles() {
+            const start = dateStart.value;
+            const end = dateEnd.value;
+
+            // Chỉ chạy khi đã chọn cả 2 ngày
+            if (start && end) {
+                // Validate sơ bộ ngày về > ngày đi
+                if (new Date(end) <= new Date(start)) {
+                    vehicleSelect.innerHTML = '<option value="">(Ngày về phải sau ngày đi)</option>';
+                    vehicleSelect.disabled = true;
+                    return;
+                }
+
+                // Bắt đầu load
+                vehicleSelect.disabled = true;
+                loadingIcon.style.display = 'block';
+                vehicleSelect.innerHTML = '<option value="">Đang kiểm tra lịch xe...</option>';
+
+                fetch(`/admin/api/get-available-vehicles?ngay_di=${start}&ngay_ve=${end}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            loadingIcon.style.display = 'none';
+                            vehicleSelect.disabled = false;
+
+                            if (data.length > 0) {
+                                let options = '<option value="">Chọn Phương tiện</option>';
+                                data.forEach(v => {
+                                    options += `<option value="${v.ma_phuong_tien}">${v.ten_phuong_tien} (${v.bien_so}) - ${v.so_cho} chỗ</option>`;
+                                });
+                                vehicleSelect.innerHTML = options;
+                            } else {
+                                vehicleSelect.innerHTML = '<option value="">Không có xe nào trống lịch này</option>';
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            loadingIcon.style.display = 'none';
+                            vehicleSelect.innerHTML = '<option value="">Lỗi tải dữ liệu xe</option>';
+                        });
+            }
+        }
+
+        // Gắn sự kiện khi đổi ngày
+        dateStart.addEventListener('change', checkAndLoadVehicles);
+        dateEnd.addEventListener('change', checkAndLoadVehicles);
+    });
+</script>

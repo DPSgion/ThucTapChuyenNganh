@@ -22,6 +22,14 @@ const {
     getEditTour, updateTour
 } = require('../controller/tourController');
 
+const {
+    getAllSchedules, toggleStatusSchedule,
+    getAddSchedule, addSchedule,
+    getResourcesByLocation,
+    getAvailableVehicles
+} = require('../controller/scheduleController');
+
+
 
 router.all('/*', function(req, res, next) {
     res.app.locals.layout='admin';
@@ -135,6 +143,23 @@ router.post('/edithotel/:id', upload.fields([
 
 // Thay đổi trạng thái Khách sạn
 router.get('/hotel/toggle-status/:id', toggleStatusHotel);
+
+
+
+// SCHEDULE
+router.get('/manageschedule', getAllSchedules);
+router.get('/schedule/toggle-status/:id', toggleStatusSchedule);
+
+// Route API lấy dữ liệu theo địa điểm (AJAX gọi vào đây)
+router.get('/api/get-resources', getResourcesByLocation);
+
+router.get('/addschedule', getAddSchedule);
+router.post('/addschedule', addSchedule);
+
+// API lấy xe rảnh
+router.get('/api/get-available-vehicles', getAvailableVehicles);
+
+
 
 
 
