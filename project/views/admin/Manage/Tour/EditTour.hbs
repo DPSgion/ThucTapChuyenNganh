@@ -83,8 +83,6 @@
             for (let i = 0; i < options.length; i++) {
                 if (options[i].value == selectedValue && selectedValue != "") {
                     options[i].disabled = true;
-                    // Edit mode: Nếu đang selected cái bị disable thì không tự đổi
-                    // Chỉ disable để user không chọn lại thôi
                 } else {
                     options[i].disabled = false;
                 }
@@ -100,7 +98,6 @@
             filterOptions(endSelect, startSelect);
         });
 
-        // --- QUAN TRỌNG: Chạy ngay lập tức để disable các option đang trùng hiện tại ---
         filterOptions(startSelect, endSelect);
         filterOptions(endSelect, startSelect);
     });

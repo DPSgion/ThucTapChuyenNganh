@@ -1,6 +1,6 @@
 const db = require('../config/db');
 
-// Lấy danh sách Tour (JOIN 2 lần để lấy tên Điểm đi và Điểm đến)
+// 1. Lấy danh sách Tour (JOIN 2 lần để lấy tên Điểm đi và Điểm đến)
 exports.getAllTours = async (req, res) => {
     try {
         const sql = `
@@ -46,7 +46,7 @@ exports.addTour = async (req, res) => {
     try {
         const { ten_tour, diem_di, diem_den } = req.body;
 
-        // Validate cơ bản: Điểm đi không được trùng điểm đến
+        // Điểm đi không được trùng điểm đến
         if (diem_di == diem_den) {
             return res.send("Lỗi: Điểm đi và Điểm đến không được trùng nhau!");
         }
@@ -67,11 +67,11 @@ exports.getEditTour = async (req, res) => {
     try {
         const id = req.params.id;
 
-        // Query 1: Lấy thông tin Tour hiện tại
+        // Lấy thông tin Tour hiện tại
         const [tours] = await db.query("SELECT * FROM tour WHERE ma_tour = ?", [id]);
         const tour = tours[0];
 
-        // Query 2: Lấy danh sách địa điểm (để đổ vào dropdown)
+        // Lấy danh sách địa điểm (để đổ vào dropdown)
         const [locations] = await db.query("SELECT ma_dia_diem, ten_dia_diem FROM dia_diem ORDER BY ten_dia_diem ASC");
 
         if (!tour) {
@@ -96,7 +96,7 @@ exports.updateTour = async (req, res) => {
         const id = req.params.id;
         const { ten_tour, diem_di, diem_den } = req.body;
 
-        // Validate: Điểm đi không được trùng điểm đến
+        // Điểm đi không được trùng điểm đến
         if (diem_di == diem_den) {
             return res.send("Lỗi: Điểm đi và Điểm đến không được trùng nhau!");
         }
@@ -112,6 +112,7 @@ exports.updateTour = async (req, res) => {
     }
 };
 
+// 6. Thay đổi trạng thái tour (0 -> 1, 1 -> 0)
 exports.toggleStatusTour = async (req, res) => {
     try {
         const id = req.params.id;
