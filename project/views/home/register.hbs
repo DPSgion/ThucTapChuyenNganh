@@ -33,11 +33,15 @@
                             <form class="signup-form" action="/register" method="POST">
                                 <div class="form-group">
                                     <label for="register-name" class="label">Họ và tên</label>
-                                    <input name="hoten" id="register-name" type="text" class="form-control" placeholder="Nguyễn Văn A" >
+                                    <input name="hoten" id="register-name" type="text" class="form-control" placeholder="Nguyễn Văn A" value="{{{hoten}}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="date" class="label">Ngày sinh</label>
+                                    <input name="ngaysinh" id="date" type="date" class="form-control" value="{{{ngaysinh}}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="register-email" class="label">Email</label>
-                                    <input name="email" id="register-email" type="email" class="form-control" placeholder="example@email.com" >
+                                    <input name="email" id="register-email" type="email" class="form-control" placeholder="example@email.com" value="{{{email}}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="register-password" class="label">Mật khẩu</label>

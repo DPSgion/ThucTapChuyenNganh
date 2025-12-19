@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 18, 2025 at 03:31 PM
+-- Generation Time: Dec 19, 2025 at 03:39 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -254,19 +254,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(50) NOT NULL,
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `hoten` varchar(50) NOT NULL,
+  `ngay_sinh` date NOT NULL,
   `vaitro` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userid`, `email`, `password`, `hoten`, `vaitro`) VALUES
-(7, 'phuong@gmail.com', '$2b$10$ZcOdydTFO8tlhIAVqLHWQuxr5CXIbd/0ECAeRHHqfmRxlU0duAgsm', 'Phương', 1),
-(8, 'oke@gmail.com', '$2b$10$3kG9sWqPmdfpgwCnHy7MEuDU4nSUJK0C2KDNS41j7NRmLMxc65KBy', 'oke', 0),
-(9, 'aa@gmail.com', '$2b$10$.LBLh/gUih0OG75sZC5oYeoPOz19Hju.85XEFnXVcFIXkOjnL1caC', 'aa', 0),
-(10, 'dinhphuong@gmail.com', '$2b$10$caTp4TPxS5sHNzE2rG7THOIuI7LNq0VW3P.nH0SjUJPumQY0thsra', 'Nguyễn Đình Phương', 0);
+INSERT INTO `user` (`userid`, `email`, `password`, `hoten`, `ngay_sinh`, `vaitro`) VALUES
+(7, 'phuong@gmail.com', '$2b$10$ZcOdydTFO8tlhIAVqLHWQuxr5CXIbd/0ECAeRHHqfmRxlU0duAgsm', 'Phương', '2004-02-22', 1),
+(11, 'phong@gmail.com', '$2b$10$F9JKtF.pV.JYgeCHHI2NjuT6EzkrGwd93FPBpBn6hyBpQo6Dp0/qW', 'Phong', '2002-01-19', 0);
 
 --
 -- Constraints for dumped tables

@@ -5,17 +5,40 @@ const passport = require('passport');
 var hinhnen = 'images/bg_1.jpg';
 
 exports.register = async (req, res, next) => {
-    const { hoten, email, password } = req.body;
+    const { hoten, email, password, ngaysinh } = req.body;
+
     let errors = [];
     if (!hoten) errors.push({ message: 'Họ tên là bắt buộc' });
     if (!email) errors.push({ message: 'Email là bắt buộc' });
     if (!password) errors.push({ message: 'Mật khẩu là bắt buộc' });
+    if (!ngaysinh) errors.push({ message: 'Ngày sinh là bắt buộc' });
+
+    if (ngaysinh) {
+        const birthDate = new Date(ngaysinh);
+        const today = new Date();
+
+        // Tính tuổi dựa trên năm
+        let age = today.getFullYear() - birthDate.getFullYear();
+
+        // Kiểm tra tháng và ngày để tính tuổi
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        if (age < 18) {
+            errors.push({ message: 'Bạn phải đủ 18 tuổi để đăng ký tài khoản!' });
+        }
+    }
 
     if (errors.length > 0) {
         return res.render('home/register', {
-            title: 'Đăng nhập',
+            title: 'Đăng ký',
             errors: errors,
-            background: hinhnen
+            background: hinhnen,
+            hoten: hoten,
+            email: email,
+            ngaysinh: ngaysinh
         });
     }
 
@@ -29,9 +52,9 @@ exports.register = async (req, res, next) => {
         const salt = await bcryptjs.genSalt(10);
         const hashPassword = await bcryptjs.hash(password, salt);
 
-        // Mặc định vaitro là 0 (User thường)
-        const sql = 'INSERT INTO user (email, password, hoten, vaitro) VALUES (?, ?, ?, 0)';
-        await pool.query(sql, [email, hashPassword, hoten]);
+        const sql = 'INSERT INTO user (email, password, hoten, ngay_sinh, vaitro) VALUES (?, ?, ?, ?, 0)';
+
+        await pool.query(sql, [email, hashPassword, hoten, ngaysinh]);
 
         req.flash('success_message', 'Đăng ký thành công! Bạn có thể đăng nhập.');
         res.redirect('/login');
