@@ -14,6 +14,8 @@
     </div>
 </div>
 
+
+
 <section class="ftco-section ftco-degree-bg">
     <div class="container">
         <div class="row">
@@ -49,9 +51,24 @@
                         </div>
 
                         <div class="form-group mt-4">
-                            <a href="/booking/{{tour.ma_lich_trinh}}" class="btn btn-primary py-3 px-5 btn-block" style="color: white; text-decoration: none;">
-                                ĐẶT NGAY
-                            </a>
+                            {{#if daDatCho}}
+                                <button class="btn btn-secondary py-3 px-1 btn-block" disabled style="cursor: not-allowed;">
+                                    BẠN ĐÃ ĐẶT CHUYẾN NÀY
+                                </button>
+                                <small class="text-center d-block mt-2 text-muted">Kiểm tra lại trong lịch sử đặt vé</small>
+
+                            {{else}}
+                                {{#if hetCho}}
+                                    <button class="btn btn-danger py-3 px-5 btn-block" disabled style="cursor: not-allowed;">
+                                        <i class="icon-times-circle"></i> ĐÃ HẾT CHỖ
+                                    </button>
+
+                                {{else}}
+                                    <a href="/booking/{{tour.ma_lich_trinh}}" class="btn btn-primary py-3 px-5 btn-block" style="color: white; text-decoration: none;">
+                                        ĐẶT NGAY
+                                    </a>
+                                {{/if}}
+                            {{/if}}
                         </div>
                     </div>
                 </div>

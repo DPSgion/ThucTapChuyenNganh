@@ -1,0 +1,176 @@
+<head>
+    <title>{{{title}}}</title>
+</head>
+
+<div class="hero-wrap js-fullheight" style="background-image: url('{{background}}'); height: 500px;">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }" style="background: rgba(11,11,11,0.58)">
+                    Xác nhận đặt tour
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section">
+    <div class="container">
+        <form action="/booking/{{tour.ma_lich_trinh}}" method="POST" id="bookingForm">
+            <div class="row">
+                <div class="col-md-8 ftco-animate">
+                    <div class="p-4 bg-light rounded">
+                        <h4 class="mb-3">1. Số lượng hành khách</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label>Người lớn (>18 tuổi)</label>
+                                <input type="number" id="adult_count" name="adult_count" class="form-control" value="1" min="1" max="{{slots_left}}">
+                                <small>Giá: <strong>{{formatCurrency tour.gia_nguoi_lon}}</strong></small>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Trẻ em (<18 tuổi)</label>
+                                <input type="number" id="child_count" name="child_count" class="form-control" value="0" min="0" max="10">
+                                <small>Giá: <strong>{{formatCurrency tour.gia_tre_em}}</strong></small>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <h4 class="mb-3">2. Thông tin hành khách</h4>
+                        <div id="passenger-list">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 ftco-animate">
+                    <div class="p-4 bg-light rounded shadow-sm sticky-top" style="top: 20px;">
+                        <h4 class="mb-3">Tóm tắt đơn hàng</h4>
+                        <p><strong>Tour:</strong> {{tour.ten_tour}}</p>
+                        <p><strong>Ngày đi:</strong> {{formatDate tour.ngay_di}}</p>
+
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span>Người lớn:</span>
+                            <span id="summary_adult">1 x {{formatCurrency tour.gia_nguoi_lon}}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span>Trẻ em:</span>
+                            <span id="summary_child">0 x {{formatCurrency tour.gia_tre_em}}</span>
+                        </div>
+
+                        <hr>
+                        <div class="d-flex justify-content-between mt-3">
+                            <h5 class="text-primary font-weight-bold">TỔNG CỘNG:</h5>
+                            <h5 class="text-primary font-weight-bold" id="total_price">0đ</h5>
+                        </div>
+
+                        <input type="hidden" name="total_amount" id="hidden_total">
+
+                        <button type="submit" class="btn btn-primary btn-block py-3 mt-4 font-weight-bold">
+                            XÁC NHẬN THANH TOÁN
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const adultInput = document.getElementById('adult_count');
+        const childInput = document.getElementById('child_count');
+        const passengerList = document.getElementById('passenger-list');
+
+        const priceAdult = {{tour.gia_nguoi_lon}};
+        const priceChild = {{tour.gia_tre_em}};
+
+        // Thông tin User đăng nhập
+        const userHoten = "{{user.hoten}}";
+        const userDob = "{{user.ngay_sinh}}";
+
+        // Hàm format tiền
+        function formatMoney(amount) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+        }
+
+        // Hàm convert date sang YYYY-MM-DD cho input date (Dành riêng cho input date của HTML)
+        function formatDateForInput(dateStr) {
+            if(!dateStr) return '';
+            const d = new Date(dateStr);
+            return d.toISOString().split('T')[0];
+        }
+
+        function renderForms() {
+            const numAdults = parseInt(adultInput.value) || 0;
+            const numChildren = parseInt(childInput.value) || 0;
+            let html = '';
+
+            // Form Người lớn
+            for (let i = 0; i < numAdults; i++) {
+                // Người lớn đầu tiên là người đặt (User login)
+                let valName = (i === 0) ? userHoten : '';
+                let valDob = (i === 0) ? formatDateForInput(userDob) : '';
+                let isReadonly = (i === 0) ? 'readonly' : '';
+                let label = (i === 0) ? `Người lớn 1 (Người đặt - Bạn)` : `Người lớn ${i + 1}`;
+
+                html += `
+                    <div class="passenger-item mb-3 pb-3 border-bottom">
+                        <h6 class="text-primary font-weight-bold">${label}</h6>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label>Họ và tên</label>
+                                <input type="text" name="passenger_name[]" class="form-control" required placeholder="Nhập họ tên" value="${valName}" ${isReadonly}>
+                                <input type="hidden" name="passenger_type[]" value="adult"> </div>
+                            <div class="col-md-4">
+                                <label>Ngày sinh</label>
+                                <input type="date" name="passenger_dob[]" class="form-control" required value="${valDob}" ${isReadonly}>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Form Trẻ em
+            for (let i = 0; i < numChildren; i++) {
+                html += `
+                    <div class="passenger-item mb-3 pb-3 border-bottom">
+                        <h6 class="text-info font-weight-bold">Trẻ em ${i + 1}</h6>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label>Họ và tên</label>
+                                <input type="text" name="passenger_name[]" class="form-control" required placeholder="Nhập tên">
+                                <input type="hidden" name="passenger_type[]" value="child"> </div>
+                            <div class="col-md-4">
+                                <label>Ngày sinh</label>
+                                <input type="date" name="passenger_dob[]" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            passengerList.innerHTML = html;
+            updateTotal(numAdults, numChildren);
+        }
+
+        function updateTotal(adults, children) {
+            const total = (adults * priceAdult) + (children * priceChild);
+
+            document.getElementById('summary_adult').innerText = `${adults} x ${formatMoney(priceAdult)}`;
+            document.getElementById('summary_child').innerText = `${children} x ${formatMoney(priceChild)}`;
+            document.getElementById('total_price').innerText = formatMoney(total);
+            document.getElementById('hidden_total').value = total;
+        }
+
+        // Sự kiện thay đổi số lượng
+        adultInput.addEventListener('change', renderForms);
+        adultInput.addEventListener('input', renderForms);
+        childInput.addEventListener('change', renderForms);
+        childInput.addEventListener('input', renderForms);
+
+        // Chạy lần đầu
+        renderForms();
+    });
+</script>

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const authController = require('../controller/authController');
-const {getPlaces, getTourDetail, getBooking} = require('../controller/placesController');
+const {getPlaces, getTourDetail, getBooking, postBooking} = require('../controller/placesController');
 
 
 var hinhnen = 'images/bg_1.jpg';
@@ -43,6 +43,9 @@ router.get('/places', getPlaces);
 router.get('/tour-detail/:id', getTourDetail);
 
 router.get('/booking/:id', yeuCauDangNhap, getBooking);
+
+// Route xử lý đặt tour (MỚI)
+router.post('/booking/:id', yeuCauDangNhap, postBooking);
 
 
 

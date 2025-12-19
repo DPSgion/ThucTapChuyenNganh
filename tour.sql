@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 18, 2025 at 03:31 PM
+-- Generation Time: Dec 19, 2025 at 04:35 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -44,6 +44,33 @@ CREATE TABLE IF NOT EXISTS `dia_diem` (
 INSERT INTO `dia_diem` (`ma_dia_diem`, `ten_dia_diem`, `mota`, `hinhdaidien`, `trang_thai`) VALUES
 (1, 'Phú Quốc', 'Phú Quốc rất đẹp', '1765969450466-phu-quoc.jpg', 1),
 (2, 'Bến Tre', 'Bến Tre chill chill', '1765969645265-ben-tre.jpg', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `don_dat`
+--
+
+DROP TABLE IF EXISTS `don_dat`;
+CREATE TABLE IF NOT EXISTS `don_dat` (
+  `id_don_dat` int NOT NULL AUTO_INCREMENT,
+  `userid` int NOT NULL,
+  `ma_lich_trinh` int NOT NULL,
+  `tong_so_nguoi_di` int NOT NULL,
+  `tong_tien` int NOT NULL,
+  `ngay_dat` date NOT NULL,
+  PRIMARY KEY (`id_don_dat`),
+  KEY `ma_lich_trinh` (`ma_lich_trinh`),
+  KEY `userid` (`userid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `don_dat`
+--
+
+INSERT INTO `don_dat` (`id_don_dat`, `userid`, `ma_lich_trinh`, `tong_so_nguoi_di`, `tong_tien`, `ngay_dat`) VALUES
+(1, 11, 2, 2, 5500000, '2025-12-19'),
+(2, 7, 2, 1, 3000000, '2025-12-19');
 
 -- --------------------------------------------------------
 
@@ -188,7 +215,33 @@ CREATE TABLE IF NOT EXISTS `lich_trinh_tour` (
 --
 
 INSERT INTO `lich_trinh_tour` (`ma_lich_trinh`, `ma_tour`, `ma_phuong_tien`, `ma_khach_san`, `ngay_di`, `ngay_ve`, `gia_nguoi_lon`, `gia_tre_em`, `so_cho_da_dat`, `trang_thai`) VALUES
-(2, 1, 3, 2, '2025-12-22 22:22:00', '2025-12-25 22:22:00', 3000000, 2500000, 0, 1);
+(2, 1, 3, 2, '2025-12-22 22:22:00', '2025-12-25 22:22:00', 3000000, 2500000, 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nguoi_di_tour`
+--
+
+DROP TABLE IF EXISTS `nguoi_di_tour`;
+CREATE TABLE IF NOT EXISTS `nguoi_di_tour` (
+  `id_nguoi_di_tour` int NOT NULL AUTO_INCREMENT,
+  `id_don_dat` int NOT NULL,
+  `ho_ten` varchar(50) NOT NULL,
+  `ngay_sinh` date NOT NULL,
+  `nguoi_dat_tour` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_nguoi_di_tour`),
+  KEY `id_don_dat` (`id_don_dat`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `nguoi_di_tour`
+--
+
+INSERT INTO `nguoi_di_tour` (`id_nguoi_di_tour`, `id_don_dat`, `ho_ten`, `ngay_sinh`, `nguoi_dat_tour`) VALUES
+(1, 1, 'Phong', '2002-01-18', 1),
+(2, 1, 'Trẻ trâu', '2020-01-14', 0),
+(3, 2, 'Phương', '2004-02-21', 1);
 
 -- --------------------------------------------------------
 
@@ -254,23 +307,29 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(50) NOT NULL,
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `hoten` varchar(50) NOT NULL,
+  `ngay_sinh` date NOT NULL,
   `vaitro` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userid`, `email`, `password`, `hoten`, `vaitro`) VALUES
-(7, 'phuong@gmail.com', '$2b$10$ZcOdydTFO8tlhIAVqLHWQuxr5CXIbd/0ECAeRHHqfmRxlU0duAgsm', 'Phương', 1),
-(8, 'oke@gmail.com', '$2b$10$3kG9sWqPmdfpgwCnHy7MEuDU4nSUJK0C2KDNS41j7NRmLMxc65KBy', 'oke', 0),
-(9, 'aa@gmail.com', '$2b$10$.LBLh/gUih0OG75sZC5oYeoPOz19Hju.85XEFnXVcFIXkOjnL1caC', 'aa', 0),
-(10, 'dinhphuong@gmail.com', '$2b$10$caTp4TPxS5sHNzE2rG7THOIuI7LNq0VW3P.nH0SjUJPumQY0thsra', 'Nguyễn Đình Phương', 0);
+INSERT INTO `user` (`userid`, `email`, `password`, `hoten`, `ngay_sinh`, `vaitro`) VALUES
+(7, 'phuong@gmail.com', '$2b$10$ZcOdydTFO8tlhIAVqLHWQuxr5CXIbd/0ECAeRHHqfmRxlU0duAgsm', 'Phương', '2004-02-22', 1),
+(11, 'phong@gmail.com', '$2b$10$F9JKtF.pV.JYgeCHHI2NjuT6EzkrGwd93FPBpBn6hyBpQo6Dp0/qW', 'Phong', '2002-01-19', 0);
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `don_dat`
+--
+ALTER TABLE `don_dat`
+  ADD CONSTRAINT `don_dat_ibfk_1` FOREIGN KEY (`ma_lich_trinh`) REFERENCES `lich_trinh_tour` (`ma_lich_trinh`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `don_dat_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `user` (`userid`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Constraints for table `hinh_dia_diem`
@@ -297,6 +356,12 @@ ALTER TABLE `lich_trinh_tour`
   ADD CONSTRAINT `lich_trinh_tour_ibfk_1` FOREIGN KEY (`ma_tour`) REFERENCES `tour` (`ma_tour`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `lich_trinh_tour_ibfk_2` FOREIGN KEY (`ma_khach_san`) REFERENCES `khach_san` (`ma_khach_san`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `lich_trinh_tour_ibfk_3` FOREIGN KEY (`ma_phuong_tien`) REFERENCES `phuong_tien` (`ma_phuong_tien`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `nguoi_di_tour`
+--
+ALTER TABLE `nguoi_di_tour`
+  ADD CONSTRAINT `nguoi_di_tour_ibfk_1` FOREIGN KEY (`id_don_dat`) REFERENCES `don_dat` (`id_don_dat`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tour`
