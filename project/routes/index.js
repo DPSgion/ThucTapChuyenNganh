@@ -2,10 +2,29 @@ var express = require('express');
 var router = express.Router();
 
 const authController = require('../controller/authController');
-const {getPlaces} = require('../controller/placesController');
+const {getPlaces, getTourDetail, getBooking} = require('../controller/placesController');
 
 
 var hinhnen = 'images/bg_1.jpg';
+
+
+function yeuCauDangNhap(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next(); // Đã đăng nhập -> Cho qua
+    }
+    // Chưa login -> Chuyển đến trang đăng nhập
+    res.redirect('/login');
+}
+
+// Chặn người đã đăng nhập quay lại trang login
+function daDangNhapThiDuoiDi(req, res, next) {
+    if (req.isAuthenticated()) {
+        // if(req.user.vaitro === 1) return res.redirect('/admin');
+        return res.redirect('/admin');
+    }
+    next();
+}
+
 
 // Set layout home mặc định
 router.all('/*', function(req, res, next) {
@@ -21,15 +40,11 @@ router.get('/', function(req, res, next) {
 })
 
 router.get('/places', getPlaces);
+router.get('/tour-detail/:id', getTourDetail);
 
-// Chặn người đã đăng nhập quay lại trang login
-function daDangNhapThiDuoiDi(req, res, next) {
-    if (req.isAuthenticated()) {
-        // if(req.user.vaitro === 1) return res.redirect('/admin');
-        return res.redirect('/admin');
-    }
-    next();
-}
+router.get('/booking/:id', yeuCauDangNhap, getBooking);
+
+
 
 router.get('/register', daDangNhapThiDuoiDi, function(req, res, next) {
     res.render('home/register', { title: 'Đăng ký', background: hinhnen });
