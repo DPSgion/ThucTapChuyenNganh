@@ -2,7 +2,10 @@ const db = require('../config/db');
 
 exports.getPlaces = async (req, res) => {
     try {
-        const sql = `
+        // Lấy tham số từ URL
+        const { keyword, d_start, d_end } = req.query;
+
+        let sql = `
             SELECT lt.*, 
                    t.ten_tour, 
                    d.ten_dia_diem, 
@@ -11,15 +14,40 @@ exports.getPlaces = async (req, res) => {
             JOIN tour t ON lt.ma_tour = t.ma_tour
             JOIN dia_diem d ON t.diem_den = d.ma_dia_diem
             WHERE lt.trang_thai = 1
-            ORDER BY lt.ngay_di ASC
         `;
 
-        const [rows] = await db.query(sql);
+        const params = [];
+
+        // Nếu có từ khóa (Tìm theo tên địa điểm hoặc tên tour)
+        if (keyword) {
+            sql += ` AND (d.ten_dia_diem LIKE ? OR t.ten_tour LIKE ?)`;
+            params.push(`%${keyword}%`);
+            params.push(`%${keyword}%`);
+        }
+
+        // Tìm ngày đi
+        if (d_start) {
+            sql += ` AND DATE(lt.ngay_di) >= ?`;
+            params.push(d_start);
+        }
+
+        // Tìm ngày về
+        if (d_end) {
+            sql += ` AND DATE(lt.ngay_ve) <= ?`;
+            params.push(d_end);
+        }
+
+        // Sắp xếp
+        sql += ` ORDER BY lt.ngay_di ASC`;
+
+
+        const [rows] = await db.query(sql, params);
 
         res.render('home/places', {
             title: 'Điểm đến',
             background: 'images/bg_1.jpg',
-            tours: rows
+            tours: rows,
+            search_params: { keyword, d_start, d_end }
         });
 
     } catch (err) {
