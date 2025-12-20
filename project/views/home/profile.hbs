@@ -1,0 +1,119 @@
+<head>
+    <title>{{{title}}}</title>
+</head>
+<div class="hero-wrap js-fullheight" style="background-image: url('{{background}}');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <h1 class="mb-3 bread" style="background: rgba(11,11,11,0.58)">Hồ sơ của tôi</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<section class="ftco-section">
+    <div class="container">
+
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="p-4 bg-light rounded shadow-sm d-flex align-items-center">
+                    <div class="mr-4">
+                        <img src="https://ui-avatars.com/api/?name={{user.hoten}}&background=random&size=100" class="rounded-circle">
+                    </div>
+                    <div>
+                        <h3 class="mb-1 font-weight-bold">{{user.hoten}}</h3>
+                        <p class="mb-1"><i class="icon-envelope"></i> {{user.email}}</p>
+                        <p class="mb-0"><i class="icon-birthday-cake"></i> {{formatDate user.ngay_sinh}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mb-4 font-weight-bold">Lịch sử chuyến đi</h3>
+
+        {{#if bookings.length}}
+            <div class="row">
+                <div class="col-md-12">
+                    {{#each bookings}}
+                        <div class="card mb-3 shadow-sm border-0">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <h5 class="font-weight-bold text-primary mb-2">
+                                            <a href="/tour-detail/{{this.ma_lich_trinh}}">{{this.ten_tour}}</a>
+                                        </h5>
+
+                                        <div class="text-muted mb-2">
+                                             Đi: <strong>{{formatDateTime this.ngay_di}}</strong>
+                                        </div>
+
+                                        <div class="text-muted mb-2">
+                                             Về: <strong>{{formatDate this.ngay_ve}}</strong>
+                                        </div>
+
+                                        <div>
+                                            <span class="badge badge-info p-2">Tổng: {{this.tong_so_nguoi_di}} khách</span>
+                                            <span class="ml-2 small text-muted">({{this.so_nguoi_lon}} Lớn - {{this.so_tre_em}} Trẻ em)</span>
+                                        </div>
+                                        <h5 class="font-weight-bold text-success mb-2" style="margin-top: 10px">
+                                            Tổng tiền: {{formatCurrency this.tong_tien}}
+                                        </h5>
+
+                                    </div>
+
+                                    <div class="col-md-4 text-right">
+                                        <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#detail-{{this.id_don_dat}}">
+                                            <i class="icon-users"></i> Xem danh sách khách
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="collapse mt-3" id="detail-{{this.id_don_dat}}">
+                                    <div class="card card-body bg-light border-0">
+                                        <h6 class="font-weight-bold border-bottom pb-2">Danh sách hành khách trong đơn này:</h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-borderless mb-0">
+                                                <thead>
+                                                <tr class="text-secondary">
+                                                    <th>#</th>
+                                                    <th>Họ và tên</th>
+                                                    <th>Ngày sinh</th>
+                                                    <th>Vai trò</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {{#each this.danh_sach_khach}}
+                                                    <tr>
+                                                        <td>{{add @index 1}}</td>
+                                                        <td class="font-weight-bold">{{this.ho_ten}}</td>
+                                                        <td>{{formatDate this.ngay_sinh}}</td>
+                                                        <td>
+                                                            {{#if (eq this.nguoi_dat_tour 1)}}
+                                                                <span class="badge badge-success">Người đặt</span>
+                                                            {{else}}
+                                                                <span class="text-muted">Thành viên</span>
+                                                            {{/if}}
+                                                        </td>
+                                                    </tr>
+                                                {{/each}}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        {{else}}
+            <div class="alert text-lg-center font-weight-bold alert-primary">
+                Bạn chưa đặt chuyến đi nào. <a href="/places">Đặt ngay</a>
+            </div>
+        {{/if}}
+
+    </div>
+</section>

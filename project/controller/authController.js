@@ -161,6 +161,70 @@ exports.login = (req, res, next) => {
     })(req, res, next);
 };
 
+
+exports.getProfile = async (req, res) => {
+    try {
+        const userid = req.user.userid;
+
+        // Lấy lịch sử đặt tour
+        const sqlBooking = `
+            SELECT dd.id_don_dat, dd.tong_tien, dd.ngay_dat, dd.tong_so_nguoi_di,
+                   t.ten_tour, 
+                   lt.ngay_di, lt.ngay_ve, lt.ma_lich_trinh
+            FROM don_dat dd
+            JOIN lich_trinh_tour lt ON dd.ma_lich_trinh = lt.ma_lich_trinh
+            JOIN tour t ON lt.ma_tour = t.ma_tour
+            WHERE dd.userid = ?
+            ORDER BY dd.ngay_dat DESC
+        `;
+        const [bookings] = await pool.query(sqlBooking, [userid]);
+
+        // Nếu có đơn hàng thì mới đi lấy danh sách hành khách
+        if (bookings.length > 0) {
+            const bookingIds = bookings.map(b => b.id_don_dat);
+
+            // Lấy tất cả hành khách của các đơn này
+            const sqlPassengers = `SELECT * FROM nguoi_di_tour WHERE id_don_dat IN (?)`;
+            const [passengers] = await pool.query(sqlPassengers, [bookingIds]);
+
+            // Ghép hành khách vào từng booking và tính Adult/Child
+            bookings.forEach(booking => {
+                // Lọc ra khách của đơn này
+                const guests = passengers.filter(p => p.id_don_dat === booking.id_don_dat);
+
+                booking.danh_sach_khach = guests;
+
+                // Tính toán số lượng Người lớn (>= 18) / Trẻ em (< 18)
+                let adults = 0;
+                let children = 0;
+                const today = new Date();
+
+                guests.forEach(g => {
+                    const birthDate = new Date(g.ngay_sinh);
+                    let age = today.getFullYear() - birthDate.getFullYear();
+                    if (age >= 18) adults++;
+                    else children++;
+                });
+
+                booking.so_nguoi_lon = adults;
+                booking.so_tre_em = children;
+            });
+        }
+
+        res.render('home/profile', {
+            title: 'Thông tin cá nhân',
+            background: '/images/bg_1.jpg',
+            user: req.user,     // Thông tin user
+            bookings: bookings  // Lịch sử đơn hàng
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Lỗi Server");
+    }
+};
+
+
 exports.logout = (req, res, next) => {
     req.logout(function(err) {
         if (err) { return next(err); }

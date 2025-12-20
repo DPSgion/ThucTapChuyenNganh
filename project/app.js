@@ -56,7 +56,8 @@ app.engine('hbs', engine({
         },
         formatCurrency: (value) => {
             return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
-        }
+        },
+        add: (a, b) => a + b,
     }
 }));
 

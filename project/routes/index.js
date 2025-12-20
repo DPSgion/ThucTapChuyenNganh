@@ -49,6 +49,11 @@ router.post('/booking/:id', yeuCauDangNhap, postBooking);
 
 
 
+router.get('/profile', yeuCauDangNhap, authController.getProfile);
+
+
+
+
 router.get('/register', daDangNhapThiDuoiDi, function(req, res, next) {
     res.render('home/register', { title: 'Đăng ký', background: hinhnen });
 });
