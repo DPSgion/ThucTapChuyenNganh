@@ -18,20 +18,23 @@
         <div class="row">
             <div class="col-lg-3 sidebar order-md-last ftco-animate">
                 <div class="sidebar-wrap ftco-animate">
-                    <h3 class="heading mb-4">Find City</h3>
-                    <form action="#">
+                    <h3 class="heading mb-4">Tìm kiếm</h3>
+                    <form action="/places" method="GET">
                         <div class="fields">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Địa điểm, thành phố">
+                                <input type="text" name="keyword" class="form-control" placeholder="Địa điểm (VD: Phú Quốc)" value="{{search_params.keyword}}">
                             </div>
+
                             <div class="form-group">
-                                <input type="text" id="checkin_date" class="form-control checkin_date" placeholder="Ngày đi">
+                                <input type="date" name="d_start" class="form-control" placeholder="Ngày đi" value="{{search_params.d_start}}">
                             </div>
+
                             <div class="form-group">
-                                <input type="text" id="checkout_date" class="form-control checkout_date" placeholder="Ngày về">
+                                <input type="date" name="d_end" class="form-control" placeholder="Ngày về" value="{{search_params.d_end}}">
                             </div>
+
                             <div class="form-group">
-                                <input type="submit" value="Search" class="btn btn-primary py-3 px-5">
+                                <input type="submit" value="Tìm kiếm" class="btn btn-primary py-3 px-5">
                             </div>
                         </div>
                     </form>
