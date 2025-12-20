@@ -1,0 +1,173 @@
+<head>
+    <title>{{{title}}}</title>
+</head>
+
+<div class="hero-wrap js-fullheight" style="background-image: url('{{background}}'); height: 500px;">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }" style="background: rgba(11,11,11,0.58)">{{tour.ten_tour}}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3 sidebar ftco-animate">
+                <div class="sidebar-wrap bg-light ftco-animate">
+                    <h3 class="heading mb-4">Thông tin chuyến đi</h3>
+
+                    <div class="fields">
+                        <div class="form-group">
+                            <label>Ngày khởi hành:</label>
+                            <span class="help-block font-weight-bold">{{formatDate tour.ngay_di}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày về:</label>
+                            <span class="help-block font-weight-bold">{{formatDate tour.ngay_ve}}</span>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <label class="font-weight-bold text-success">Giá người lớn:</label>
+                            <h4 class="text-success">{{formatCurrency tour.gia_nguoi_lon}}</h4>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold text-secondary">Giá trẻ em:</label>
+                            <h5 class="text-secondary">{{formatCurrency tour.gia_tre_em}}</h5>
+                        </div>
+
+                        <div class="form-group border-top pt-3">
+                            <label>Số chỗ còn nhận:</label>
+                            <h4 class="text-danger font-weight-bold">
+                                {{tour.so_cho_da_dat}} / {{tour.so_cho}} khách
+                            </h4>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            {{#if daDatCho}}
+                                <button class="btn btn-secondary py-3 px-1 btn-block" disabled style="cursor: not-allowed;">
+                                    BẠN ĐÃ ĐẶT CHUYẾN NÀY
+                                </button>
+                                <small class="text-center d-block mt-2 text-muted">Kiểm tra lại trong lịch sử đặt vé</small>
+
+                            {{else}}
+                                {{#if hetCho}}
+                                    <button class="btn btn-danger py-3 px-5 btn-block" disabled style="cursor: not-allowed;">
+                                        <i class="icon-times-circle"></i> ĐÃ HẾT CHỖ
+                                    </button>
+
+                                {{else}}
+                                    <a href="/booking/{{tour.ma_lich_trinh}}" class="btn btn-primary py-3 px-5 btn-block" style="color: white; text-decoration: none;">
+                                        ĐẶT NGAY
+                                    </a>
+                                {{/if}}
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-md-12 ftco-animate">
+
+                        {{#if imgs_location.length}}
+                            <div id="carouselLocation" class="carousel slide mb-4 shadow-sm rounded overflow-hidden" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {{#each imgs_location}}
+                                        <div class="carousel-item {{#if @first}}active{{/if}}">
+                                            <img src="/uploads/{{this.duong_dan}}" class="d-block w-100" style="height: 600px; object-fit: cover; border-radius: 10px" alt="Hình địa điểm">
+                                        </div>
+                                    {{/each}}
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselLocation" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselLocation" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+
+                        {{/if}}
+
+                        <h2 class="mb-3 font-weight-bold text-primary">{{tour.ten_tour}}</h2>
+
+                        <h4 class="mb-2 mt-4 font-weight-bold">Giới thiệu điểm đến</h4>
+                        <p class="text-justify" style="white-space: pre-line;">
+                            {{tour.mota_dia_diem}}
+                        </p>
+
+                        <hr>
+
+                        <div class="mt-5 mb-5">
+                            <h4 class="mb-3 font-weight-bold">Phương tiện di chuyển: {{tour.ten_phuong_tien}}</h4>
+
+                            {{#if imgs_vehicle.length}}
+                                <div id="carouselVehicle" class="carousel slide shadow-sm rounded overflow-hidden" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        {{#each imgs_vehicle}}
+                                            <div class="carousel-item {{#if @first}}active{{/if}}">
+                                                <img src="/uploads/{{this.duong_dan}}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Hình xe">
+                                            </div>
+                                        {{/each}}
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselVehicle" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselVehicle" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            {{/if}}
+
+<!--                            <div class="card-body pl-0">-->
+<!--                                <p class="card-text text-muted">{{tour.mota_phuong_tien}}</p>-->
+<!--                            </div>-->
+                        </div>
+
+                        <hr>
+
+                        <div class="mt-5 mb-5">
+                            <h4 class="mb-3 font-weight-bold">Khách sạn: {{tour.ten_khach_san}}</h4>
+
+                            {{#if imgs_hotel.length}}
+                                <div id="carouselHotel" class="carousel slide shadow-sm rounded overflow-hidden" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        {{#each imgs_hotel}}
+                                            <div class="carousel-item {{#if @first}}active{{/if}}">
+                                                <img src="/uploads/{{this.duong_dan}}" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Hình khách sạn">
+                                            </div>
+                                        {{/each}}
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselHotel" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselHotel" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            {{/if}}
+
+<!--                            <div class="card-body pl-0">-->
+<!--                                <p class="card-text text-muted">{{tour.mota_khach_san}}</p>-->
+<!--                            </div>-->
+                        </div>
+
+                    </div>
+                </div>
+            </div> </div>
+    </div>
+</section>

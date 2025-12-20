@@ -26,6 +26,13 @@ app.engine('hbs', engine({
     layoutsDir: path.join(__dirname, 'views/layouts'),
     partialsDir: path.join(__dirname, 'views/partials'),
     helpers: {
+        formatDate: function(date) {
+            const d = new Date(date);
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const year = d.getFullYear();
+            return `${day}/${month}/${year}`;
+        },
         formatDateTime: function(date) {
             const d = new Date(date);
 
