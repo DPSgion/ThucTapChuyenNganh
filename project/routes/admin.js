@@ -45,19 +45,6 @@ router.get('/', function(req, res, next) {
 
 
 
-
-router.get('/tables', function(req, res, next) {
-    res.render('admin/tables',
-        {
-            title: 'Table Page'
-        });
-});
-
-
-
-
-
-
 router.get('/managetour', getAllTours);
 
 router.get('/addtour', getAddTour);
