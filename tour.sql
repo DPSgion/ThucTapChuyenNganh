@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 19, 2025 at 04:35 PM
+-- Generation Time: Dec 21, 2025 at 10:02 AM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `don_dat` (
   PRIMARY KEY (`id_don_dat`),
   KEY `ma_lich_trinh` (`ma_lich_trinh`),
   KEY `userid` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `don_dat`
@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS `don_dat` (
 
 INSERT INTO `don_dat` (`id_don_dat`, `userid`, `ma_lich_trinh`, `tong_so_nguoi_di`, `tong_tien`, `ngay_dat`) VALUES
 (1, 11, 2, 2, 5500000, '2025-12-19'),
-(2, 7, 2, 1, 3000000, '2025-12-19');
+(2, 7, 2, 1, 3000000, '2025-12-19'),
+(3, 13, 2, 1, 3000000, '2025-12-21');
 
 -- --------------------------------------------------------
 
@@ -175,7 +176,8 @@ CREATE TABLE IF NOT EXISTS `khach_san` (
   `sdt` varchar(10) NOT NULL,
   `trang_thai` tinyint NOT NULL DEFAULT '0',
   `anh_bia` varchar(255) NOT NULL,
-  PRIMARY KEY (`ma_khach_san`)
+  PRIMARY KEY (`ma_khach_san`),
+  KEY `ma_dia_diem` (`ma_dia_diem`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -208,14 +210,14 @@ CREATE TABLE IF NOT EXISTS `lich_trinh_tour` (
   KEY `ma_tour` (`ma_tour`),
   KEY `ma_khach_san` (`ma_khach_san`),
   KEY `ma_phuong_tien` (`ma_phuong_tien`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `lich_trinh_tour`
 --
 
 INSERT INTO `lich_trinh_tour` (`ma_lich_trinh`, `ma_tour`, `ma_phuong_tien`, `ma_khach_san`, `ngay_di`, `ngay_ve`, `gia_nguoi_lon`, `gia_tre_em`, `so_cho_da_dat`, `trang_thai`) VALUES
-(2, 1, 3, 2, '2025-12-22 22:22:00', '2025-12-25 22:22:00', 3000000, 2500000, 3, 1);
+(2, 1, 3, 2, '2025-12-22 22:22:00', '2025-12-25 22:22:00', 3000000, 2500000, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -232,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `nguoi_di_tour` (
   `nguoi_dat_tour` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_nguoi_di_tour`),
   KEY `id_don_dat` (`id_don_dat`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `nguoi_di_tour`
@@ -241,7 +243,8 @@ CREATE TABLE IF NOT EXISTS `nguoi_di_tour` (
 INSERT INTO `nguoi_di_tour` (`id_nguoi_di_tour`, `id_don_dat`, `ho_ten`, `ngay_sinh`, `nguoi_dat_tour`) VALUES
 (1, 1, 'Phong', '2002-01-18', 1),
 (2, 1, 'Trẻ trâu', '2020-01-14', 0),
-(3, 2, 'Phương', '2004-02-21', 1);
+(3, 2, 'Phương', '2004-02-21', 1),
+(4, 3, 'Nguyễn Đình Phương', '2004-02-21', 1);
 
 -- --------------------------------------------------------
 
@@ -258,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `phuong_tien` (
   `trang_thai` tinyint NOT NULL DEFAULT '0',
   `hinh_dai_dien` varchar(255) NOT NULL,
   PRIMARY KEY (`ma_phuong_tien`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `phuong_tien`
@@ -268,7 +271,7 @@ INSERT INTO `phuong_tien` (`ma_phuong_tien`, `ten_phuong_tien`, `bien_so`, `so_c
 (1, 'Hyundai Solati', '59B-123.45', 15, 0, '1765976233953-solati-1.jpg'),
 (2, 'Ford Transit', '50B-888.88', 15, 0, '1765976458846-FordTransit-1.png'),
 (3, 'Hyundai County', '59B-987.65', 29, 0, '1765976684466-HyundaiCounty-1.jpg'),
-(4, 'Thaco Bluesky', '59B-678.90', 45, 0, '1765976920781-bluesky-bus-1.jpg');
+(4, 'Thaco Bluesky', '59B-678.90', 45, 2, '1765976920781-bluesky-bus-1.jpg');
 
 -- --------------------------------------------------------
 
@@ -310,7 +313,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `ngay_sinh` date NOT NULL,
   `vaitro` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user`
@@ -318,7 +321,9 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`userid`, `email`, `password`, `hoten`, `ngay_sinh`, `vaitro`) VALUES
 (7, 'phuong@gmail.com', '$2b$10$ZcOdydTFO8tlhIAVqLHWQuxr5CXIbd/0ECAeRHHqfmRxlU0duAgsm', 'Phương', '2004-02-22', 1),
-(11, 'phong@gmail.com', '$2b$10$F9JKtF.pV.JYgeCHHI2NjuT6EzkrGwd93FPBpBn6hyBpQo6Dp0/qW', 'Phong', '2002-01-19', 0);
+(11, 'phong@gmail.com', '$2b$10$F9JKtF.pV.JYgeCHHI2NjuT6EzkrGwd93FPBpBn6hyBpQo6Dp0/qW', 'Phong', '2002-01-19', 0),
+(12, 'vana@gmail.com', '$2b$10$n71pvAUu5B5icdl/gNtAt.EMzou0siw1NBbpQnRiES2/Ii8U4obp6', 'Nguyễn Văn A', '2005-11-22', 0),
+(13, 'dinhphuong@gmail.com', '$2b$10$gSFE2AP6XaWx5bXYaZHs0.h9DirWv6AKam4xhoN4LMEaZl2F9iuTO', 'Nguyễn Đình Phương', '2004-02-22', 0);
 
 --
 -- Constraints for dumped tables
@@ -348,6 +353,12 @@ ALTER TABLE `hinh_khach_san`
 --
 ALTER TABLE `hinh_phuong_tien`
   ADD CONSTRAINT `hinh_phuong_tien_ibfk_1` FOREIGN KEY (`ma_phuong_tien`) REFERENCES `phuong_tien` (`ma_phuong_tien`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `khach_san`
+--
+ALTER TABLE `khach_san`
+  ADD CONSTRAINT `khach_san_ibfk_1` FOREIGN KEY (`ma_dia_diem`) REFERENCES `dia_diem` (`ma_dia_diem`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `lich_trinh_tour`
