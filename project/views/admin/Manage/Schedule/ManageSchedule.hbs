@@ -110,19 +110,19 @@
                                 </td>
 
                                 <td class="align-middle text-center">
-                                    <a href="/admin/editschedule/{{this.ma_lich_trinh}}" class="btn btn-primary btn-sm mb-1" title="Sửa">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
+<!--                                    <a href="/admin/editschedule/{{this.ma_lich_trinh}}" class="btn btn-primary btn-sm mb-1" title="Sửa">-->
+<!--                                        <i class="fa fa-edit"></i>-->
+<!--                                    </a>-->
 
                                     {{#if (eq this.trang_thai 1)}}
                                         <a href="/admin/schedule/toggle-status/{{this.ma_lich_trinh}}"
                                            class="btn btn-warning btn-sm" onclick="return confirm('Ngưng lịch này?')">
-                                            <i class="fa fa-ban"></i>
+                                            Ngưng
                                         </a>
                                     {{else}}
                                         <a href="/admin/schedule/toggle-status/{{this.ma_lich_trinh}}"
                                            class="btn btn-success btn-sm" onclick="return confirm('Kích hoạt lại?')">
-                                            <i class="fa fa-check"></i>
+                                            Hoạt động lại
                                         </a>
                                     {{/if}}
                                 </td>
