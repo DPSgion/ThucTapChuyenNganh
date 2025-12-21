@@ -31,6 +31,11 @@ exports.register = async (req, res, next) => {
         }
     }
 
+    const [rows] = await pool.query('SELECT * FROM user WHERE email = ?', [email]);
+    if (rows.length > 0) {
+        errors.push({ message: 'Email này đã được đăng ký!' });
+    }
+
     if (errors.length > 0) {
         return res.render('home/register', {
             title: 'Đăng ký',
@@ -43,11 +48,7 @@ exports.register = async (req, res, next) => {
     }
 
     try {
-        const [rows] = await pool.query('SELECT * FROM user WHERE email = ?', [email]);
-        if (rows.length > 0) {
-            req.flash('error_message', 'Email này đã được đăng ký!');
-            return res.redirect('/register');
-        }
+
 
         const salt = await bcryptjs.genSalt(10);
         const hashPassword = await bcryptjs.hash(password, salt);
