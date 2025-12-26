@@ -72,7 +72,7 @@ exports.getEditVehicle = async (req, res) => {
             return res.redirect('/admin/managevehicle');
         }
 
-        res.render('admin/Manage/Vehicle/EditVehicle', { // Sửa đường dẫn view cho đúng folder của bạn
+        res.render('admin/Manage/Vehicle/EditVehicle', {
             title: 'Sửa phương tiện',
             vehicle: vehicle,
             album: album
