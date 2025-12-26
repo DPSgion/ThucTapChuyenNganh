@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const upload = require('../middleware/multer');
-const {update_password} = require('../controller/authController');
+const {update_password, createAdmin} = require('../controller/authController');
 const { addLocation, getAllLocations, getEditLocation, updateLocation, toggleStatusLocation } = require('../controller/locationController');
 const {
     getAllVehicles,
@@ -147,6 +147,14 @@ router.post('/addschedule', addSchedule);
 router.get('/api/get-available-vehicles', getAvailableVehicles);
 
 
+
+// Tạo tài khoản admin
+router.get('/createadmin', function(req, res) {
+    return res.render('admin/create_admin', {
+        title: 'Tạo tài khoản admin'
+    })
+})
+router.post('/createadmin', createAdmin);
 
 
 

@@ -225,6 +225,66 @@ exports.getProfile = async (req, res) => {
     }
 };
 
+exports.createAdmin = async (req, res) => {
+    const { hoten, email, password, ngaysinh } = req.body;
+
+    let errors = [];
+    if (!hoten) errors.push({ message: 'Họ tên là bắt buộc' });
+    if (!email) errors.push({ message: 'Email là bắt buộc' });
+    if (!password) errors.push({ message: 'Mật khẩu là bắt buộc' });
+    if (!ngaysinh) errors.push({ message: 'Ngày sinh là bắt buộc' });
+
+    if (ngaysinh) {
+        const birthDate = new Date(ngaysinh);
+        const today = new Date();
+
+        // Tính tuổi dựa trên năm
+        let age = today.getFullYear() - birthDate.getFullYear();
+
+        // Kiểm tra tháng và ngày để tính tuổi
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        if (age < 18) {
+            errors.push({ message: 'Bạn phải đủ 18 tuổi để đăng ký tài khoản!' });
+        }
+    }
+
+    const [rows] = await pool.query('SELECT * FROM user WHERE email = ?', [email]);
+    if (rows.length > 0) {
+        errors.push({ message: 'Email này đã được đăng ký!' });
+    }
+
+    if (errors.length > 0) {
+        return res.render('admin/create_admin', {
+            title: 'Tạo tài khoản admin',
+            errors: errors,
+            hoten: hoten,
+            email: email,
+            ngaysinh: ngaysinh
+        });
+    }
+
+    try {
+        const salt = await bcryptjs.genSalt(10);
+        const hashPassword = await bcryptjs.hash(password, salt);
+
+        const sql = 'INSERT INTO user (email, password, hoten, ngay_sinh, vaitro) VALUES (?, ?, ?, ?, 1)';
+
+        await pool.query(sql, [email, hashPassword, hoten, ngaysinh]);
+
+        req.flash('success_message', 'Tạo tài khoản admin thành công !');
+        res.redirect('/admin/createadmin');
+
+    } catch (err) {
+        console.error(err);
+        req.flash('error_message', 'Lỗi hệ thống!');
+        res.redirect('/createadmin');
+    }
+}
+
 
 exports.logout = (req, res, next) => {
     req.logout(function(err) {
